@@ -11,14 +11,18 @@
 10 - Armor
 """
 
+
 import Creatures
 import Things
-import pygame
 import time
 import os
 import sys
 import random
 import threading
+try:
+    import pygame
+except ModuleNotFoundError:
+    pass
 EXIT = False
 
 
@@ -104,6 +108,7 @@ def test_room(hero):
             print("10 - Убрать шлем в инвентарь")
         if hero.is_equiped_shield():
             print("11 - Убрать щит в инвентарь")
+        print("111 - Выход")
         choose = int(input(">"))
 
         if choose is 0:
@@ -386,9 +391,12 @@ def test_room(hero):
 
 
 def main():
-    pygame.init()
-    os.system("clear")
-    threading.Thread(target=play_song).start()
+    try:
+        pygame.init()
+        os.system("clear")
+        threading.Thread(target=play_song).start()
+    except NameError:
+        pass
     hero = Creatures.MainHero.create()
     #say_hello()
     hero = test_room(hero)
