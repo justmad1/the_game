@@ -27,9 +27,6 @@ class LiveCreature(object):
               "\nAttack: " + str(self.__attack) + "\nDefense: " + str(self.__defense)
         print(ret)
 
-    def __del__(self):
-        pass
-
     def __die(self):
         self.__max_health = 0
         self.__health = 0
@@ -40,7 +37,6 @@ class LiveCreature(object):
         self.__default_attack = 0
         self.__attack = 0
         self.__defense = 0
-        self.__del__()
 
     def get_name(self):
         return self.__name

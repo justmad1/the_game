@@ -9,12 +9,6 @@ class Thing(object):
         self.__cost = cost
         self.__weight = weight
 
-    def __del__(self):
-        print("Object deleted!")
-
-    def delete_thing(self):
-        self.__del__()
-
     def info(self):
         print(self.__name, "\nCost: ", self.__cost, "\nWeight: ", self.__weight)
 

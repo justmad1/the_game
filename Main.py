@@ -25,10 +25,10 @@ EXIT = False
 def play_song():
     global EXIT
     print("i am play")
-    pygame.mixer.music.load('sounds/mario.ogg')
+    pygame.mixer.music.load('sounds/epic.ogg')
     while True:
         pygame.mixer.music.play()
-        for i in range(75):
+        for i in range(2900):
             time.sleep(0.1)
             if EXIT is True:
                 pygame.mixer.music.stop()
@@ -390,7 +390,7 @@ def main():
     os.system("clear")
     threading.Thread(target=play_song).start()
     hero = Creatures.MainHero.create()
-    say_hello()
+    #say_hello()
     hero = test_room(hero)
 
 
