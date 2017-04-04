@@ -1,0 +1,6 @@
+Knight
+Ogr
+Murlock
+Yeti
+Small Dragon
+Big Dragon
