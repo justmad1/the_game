@@ -21,6 +21,7 @@ import random
 import threading
 try:
     import pygame
+    from pygame import *
 except ModuleNotFoundError:
     pass
 EXIT = False
@@ -28,7 +29,6 @@ EXIT = False
 
 def play_song():
     global EXIT
-    print("i am play")
     pygame.mixer.music.load('sounds/epic.ogg')
     while True:
         pygame.mixer.music.play()
@@ -90,7 +90,7 @@ def test_room(hero):
     room_creatures = []
 
     while True:
-        print()
+        print("")
         if hero.get_inventory():
             print("0 - Удалить вещь из инвентаря")
         print("1 - Все существа в комнате")
@@ -109,7 +109,12 @@ def test_room(hero):
         if hero.is_equiped_shield():
             print("11 - Убрать щит в инвентарь")
         print("111 - Выход")
-        choose = int(input(">"))
+        try:
+            choose = int(input(">"))
+        except ValueError:
+            print("Неверный ввод!")
+            continue
+        os.system("clear")
 
         if choose is 0:
             if hero.get_inventory():
@@ -118,7 +123,11 @@ def test_room(hero):
                 for obj in hero.get_inventory():
                     print(i, "-", obj.get_name())
                     i += 1
-                choose = int(input(">"))
+                try:
+                    choose = int(input(">"))
+                except ValueError:
+                    print("Неверный ввод!")
+                    continue
                 choose -= 1
                 rm_obj = hero.get_inventory()[choose]
                 hero.remove_from_inventory_by_obj(rm_obj)
@@ -138,20 +147,28 @@ def test_room(hero):
                 print("\nСейчас в комнате только вы\n")
 
         elif choose is 2:
-            choose = int(input("\n1 - Рандомное существо\n2 - Существо с заданными параметрами\n>"))
+            try:
+                choose = int(input("\n1 - Рандомное существо\n2 - Существо с заданными параметрами\n>"))
+            except ValueError:
+                print("Неверный ввод!")
+                continue
             if choose is 1:
                 rand = random.randint(1, 10)
                 rand_creature = Creatures.RandomСreature(rand)
                 room_creatures.append(rand_creature)
             elif choose is 2:
-                name = input("Введите имя: ")
-                health = int(input("Введите здоровье: "))
-                mana = int(input("Введите ману: "))
-                stamina = int(input("Введите выносливость: "))
-                attack = int(input("Введите атаку: "))
-                defense = int(input("Введите защиту: "))
-                creature = Creatures.LiveCreature(name, health, mana, stamina, attack, defense)
-                room_creatures.append(creature)
+                try:
+                    name = input("Введите имя: ")
+                    health = int(input("Введите здоровье: "))
+                    mana = int(input("Введите ману: "))
+                    stamina = int(input("Введите выносливость: "))
+                    attack = int(input("Введите атаку: "))
+                    defense = int(input("Введите защиту: "))
+                    creature = Creatures.LiveCreature(name, health, mana, stamina, attack, defense)
+                    room_creatures.append(creature)
+                except ValueError:
+                    print("Неверный ввод!")
+                    continue
             print("\n")
 
         elif choose is 3:
@@ -163,17 +180,20 @@ def test_room(hero):
                 for obj in room_creatures:
                     print(i, "-", obj.get_name(), end="")
                     i += 1
-                num = int(input(">"))
+                try:
+                    num = int(input(">"))
+                except ValueError:
+                    print("Неверный ввод!")
+                    continue
                 num -= 1
 
                 if num < 0 or num > len(room_creatures):
                     print("Неверный ввод!")
 
                 else:
-                    creature = room_creatures.pop(num)
-                    creature.health_reduce(hero.get_current_attack())
-                    room_creatures.append(creature)
-                    print(creature.get_current_health())
+                    creature = room_creatures[num]
+                    creature.health_reduce(hero.attack())
+                    room_creatures[num] = creature
                     print("Вы атаковали", creature.get_name(), creature.get_current_health(), "/",
                           creature.get_max_health())
 
@@ -183,7 +203,11 @@ def test_room(hero):
             print("3 - Создать магию")
             print("4 - создать зелье")
 
-            choose = int(input(">"))
+            try:
+                choose = int(input(">"))
+            except ValueError:
+                print("Неверный ввод!")
+                continue
             if choose is 1:
                 print("1 - Меч")
                 print("2 - Клинок")
@@ -191,8 +215,12 @@ def test_room(hero):
                 print("4 - Молот")
                 print("5 - Лук")
                 print("6 - Арбалет")
-                choose = int(input(">"))
-                lvl = int(input("Введите уровень оружия (1-10): "))
+                try:
+                    choose = int(input(">"))
+                    lvl = int(input("Введите уровень оружия (1-10): "))
+                except ValueError:
+                    print("Неверный ввод!")
+                    continue
                 if lvl < 1:
                     lvl = 1
                 elif lvl > 10:
@@ -217,8 +245,11 @@ def test_room(hero):
                 print("1 - Броня")
                 print("2 - Шлем")
                 print("3 - Щит")
-                choose = int(input(">"))
-                lvl = int(input("Введите уровень брони (1-10): "))
+                try:
+                    choose = int(input(">"))
+                    lvl = int(input("Введите уровень брони (1-10): "))
+                except ValueError:
+                    print("Неверный ввод!")
                 if lvl < 1:
                     lvl = 1
                 elif lvl > 10:
@@ -238,8 +269,11 @@ def test_room(hero):
                 print("2 - ледяная стрела")
                 print("3 - лечение")
                 print("3 - призыв существа")
-                choose = int(input(">"))
-                lvl = int(input("Введите уровень заклинания (1-10): "))
+                try:
+                    choose = int(input(">"))
+                    lvl = int(input("Введите уровень заклинания (1-10): "))
+                except ValueError:
+                    print("Неверный ввод!")
                 if lvl < 1:
                     lvl = 1
                 elif lvl > 10:
@@ -260,8 +294,11 @@ def test_room(hero):
                 print("2 - мана+")
                 print("3 - здоровье-")
                 print("3 - мана-")
-                choose = int(input(">"))
-                lvl = int(input("Введите уровень зелья (1-10): "))
+                try:
+                    choose = int(input(">"))
+                    lvl = int(input("Введите уровень зелья (1-10): "))
+                except ValueError:
+                    print("Неверный ввод!")
                 if lvl < 1:
                     lvl = 1
                 elif lvl > 10:
@@ -289,7 +326,10 @@ def test_room(hero):
             for obj in inventory:
                 print(i, "-", obj.get_name())
                 i += 1
-            choose = int(input(">"))
+            try:
+                choose = int(input(">"))
+            except ValueError:
+                print("Неверный ввод!")
             if choose < 1:
                 choose = 1
             elif choose > len(inventory):
@@ -309,7 +349,11 @@ def test_room(hero):
                 for creature in room_creatures:
                     print(i, "-", creature.get_name(), end="")
                     i += 1
-                choose = int(input(">"))
+                try:
+                    choose = int(input(">"))
+                    lvl = int(input("Введите уровень оружия (1-10): "))
+                except ValueError:
+                    print("Неверный ввод!")
                 print(choose)
                 input()
                 if choose < 0:
@@ -390,13 +434,18 @@ def test_room(hero):
                 room_creatures.remove(obj)
 
 
-def main():
+def play_music():
     try:
         pygame.init()
         os.system("clear")
-        threading.Thread(target=play_song).start()
-    except NameError:
+        if input("Включить музыку?\n1 - Да\n>") is "1":
+            threading.Thread(target=play_song).start()
+    except NameError or ValueError:
         pass
+
+
+def main():
+    play_music()
     hero = Creatures.MainHero.create()
     #say_hello()
     hero = test_room(hero)
