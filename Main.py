@@ -21,7 +21,6 @@ import random
 import threading
 try:
     import pygame
-    from pygame import *
 except ModuleNotFoundError:
     pass
 EXIT = False
@@ -114,6 +113,8 @@ def test_room(hero):
         except ValueError:
             print("Неверный ввод!")
             continue
+        os.system("clear")
+        os.system("clear")
         os.system("clear")
 
         if choose is 0:
@@ -427,6 +428,10 @@ def test_room(hero):
             global EXIT
             EXIT = True
             return hero
+
+        elif choose is 00:
+            damage = int(input("Введите урон: "))
+            hero.health_reduce(damage)
 
         for obj in room_creatures:
             if obj.get_current_health() is 0:

@@ -242,7 +242,7 @@ class Armor(Thing):
 
     def info(self):
         print(self.get_name(), "\nStrength:", self.__value, "\nWeight:", self.get_weight(),
-              "\nCost:", self.get_cost())
+            "\nCost:", self.get_cost())
 
     def get_type(self):
         return self.__type
@@ -250,5 +250,8 @@ class Armor(Thing):
     def get_value(self):
         return self.__value
 
-    def increase_value(self, i):
+    def increase_value(self, i=1):
         self.__value += i
+
+    def reduce_value(self, i=1):
+        self.__value -= i

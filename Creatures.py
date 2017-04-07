@@ -1,4 +1,5 @@
 import random
+import sys
 
 
 class LiveCreature(object):
@@ -27,7 +28,7 @@ class LiveCreature(object):
               "\nAttack: " + str(self.__attack) + "\nDefense: " + str(self.__defense)
         print(ret)
 
-    def __die(self):
+    def die(self):
         self.__max_health = 0
         self.__health = 0
         self.__max_mana = 0
@@ -90,14 +91,21 @@ class LiveCreature(object):
             self.__stamina -= r
 
     def health_reduce(self, damage=1):
-        if damage < self.__defense:
-            return
+        if self.get_class_id() is 2:
+            if damage < self.get_defense():
+                return
+            else:
+                damage -= self.get_defense()
         else:
-            damage -= self.__defense
-        if damage > self.__health:
-            self.__health = 0
-            self.__die()
-            pass
+            if damage < self.__defense:
+                return
+            else:
+                damage -= self.__defense
+        if damage >= self.__health:
+            if self.get_class_id() is 2:
+                self.__del__()
+            else:
+                self.die()
         else:
             self.__health -= damage
 
@@ -173,9 +181,9 @@ class MainHero(LiveCreature):
         self.__game_over()
 
     def __game_over(self):
-        pass
+        self.die()
         #print("You are dead! Game is over")
-        #sys.exit("gg")
+        sys.exit("gg")
 
     def uplevel(self, lv=1):
         self.__level += lv
@@ -346,7 +354,18 @@ class MainHero(LiveCreature):
             self.reset_attack()
 
     def get_defense(self):
-        return self.__shield.get_value() + self.__armor.get_value() + self.__helmet.get_value()
+        defense = 0
+        if self.is_equiped_armor():
+            defense += self.__armor.get_value()
+        if self.is_equiped_helmet():
+            defense += self.__helmet.get_value()
+        if self.is_equiped_shield():
+            defense += self.__shield.get_value()
+
+        if defense is 0:
+            defense = self._LiveCreature__defense
+
+        return defense
 
     def get_current_attack(self):
         if not self.__equiped_weapon:
