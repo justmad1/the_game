@@ -450,9 +450,7 @@ def play_music():
 
 
 def main():
-    play_music()
     hero = Creatures.MainHero.create()
-    #say_hello()
     hero = test_room(hero)
 
 
