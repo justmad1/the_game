@@ -7,6 +7,7 @@ class Location:
 
     def __init__(self, name="small room", size=1, special_type=0):
         self.__all_creatures = []
+        self.__all_things = []
         self.__name = name
         self.__max_number_of_creatures = 0
         self.__current_number_of_creatures = 0
@@ -24,11 +25,32 @@ class Location:
     def get_type(self):
         return self.__size
 
-    def max_number_of_creatures(self):
+    def get_max_number_of_creatures(self):
         return self.__max_number_of_creatures
 
-    def current_number_of_creatures(self):
+    def get_current_number_of_creatures(self):
         return self.__current_number_of_creatures
+
+    def get_all_things(self):
+        return self.__all_things
+
+    def add_thing(self, thing):
+        self.__all_things.append(thing)
+
+    def remove_thing_by_obj(self, thing):
+        try:
+            self.__all_things.remove(thing)
+            return True
+        except:
+            return False
+
+    def remove_thing_by_name(self, name):
+        for _ in self.__all_things:
+            try:
+                if _.get_name() is name:
+                    self.__all_things.remove(_)
+            except:
+                pass
 
     def add_creature(self, creature):
         if self.__current_number_of_creatures + 1 <= self.__max_number_of_creatures:
@@ -38,11 +60,11 @@ class Location:
             return False
 
     def remove_creature_by_obj(self, creature):
-        for obj in self.__all_creatures:
-            if obj is creature:
-                self.__all_creatures.remove(obj)
-                return True
-        return False
+        try:
+            self.__all_creatures.remove(creature)
+            return True
+        except:
+            return False
 
     def remove_creature_by_name(self, name):
         for obj in self.__all_creatures:
