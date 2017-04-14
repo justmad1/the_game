@@ -1,3 +1,6 @@
+import random
+
+
 class Thing(object):
     __id = 4
 
@@ -84,7 +87,7 @@ class Weapon(Thing):                                        # !!   Do not use  !
             self.__damage -= r
 
 
-class Сutting(Weapon):
+class Cutting(Weapon):
     __id = 6
     __max_durability = 10
 
@@ -255,3 +258,72 @@ class Armor(Thing):
 
     def reduce_value(self, i=1):
         self.__value -= i
+
+
+class Chest(object):
+    __id = 12
+
+    def __init__(self, locked=False):
+        self.__all_things = []
+        self.__is_locked = locked
+        self.__key = []
+
+        if self.__is_locked:
+            for i in range(10):
+                self.__key.append(random.randint(0, 10000))
+
+    def is_locked(self):
+        return self.__is_locked
+
+    def show_things(self):
+        if not self.__is_locked:
+            if len(self.__all_things) is 0:
+                print("chest is empty")
+            else:
+                for obj in self.__all_things:
+                    try:
+                        print(obj.info())
+                    except:
+                        print(obj)
+                    print("-----------")
+        else:
+            print("chest closed")
+
+    def take_a_key(self):
+        if self.__is_locked:
+            return self.__key
+        else:
+            return None
+
+    def open(self, key):
+        if self.__is_locked:
+            if key == self.__key:
+                self.__is_locked = False
+
+    def _add_thing(self, thing):
+        self.__all_things.append(thing)
+
+    def remove_thing_by_name(self, name):
+        for obj in self.__all_things:
+            try:
+                if obj.get_name() is name:
+                    self.__all_things.remove(obj)
+            except:
+                pass
+
+    def remove_thing_by_obj(self, obj):
+        try:
+            self.__all_things.remove(obj)
+        except:
+            pass
+
+    def take_a_thing(self, name):
+        for obj in self.__all_things:
+            try:
+                if obj.get_name() is name:
+                    r = obj
+                    self.__all_things.remove(obj)
+                    return r
+            except:
+                pass
+

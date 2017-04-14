@@ -1,3 +1,6 @@
+import random
+
+
 class Location:
     """Main class of location"""
     __id = 11
@@ -5,13 +8,20 @@ class Location:
     def get_class_id(self):
         return self.__id
 
-    def __init__(self, name="small room", size=1, special_type=0):
+    def __init__(self, name="small room", size=1, locked=False, special_type=0):
         self.__all_creatures = []
         self.__all_things = []
         self.__name = name
         self.__max_number_of_creatures = 0
         self.__current_number_of_creatures = 0
         self.__size = size
+        self.__is_locked=locked
+        self.__key = []
+
+        if self.__is_locked:
+            if self.__is_locked:
+                for i in range(10):
+                    self.__key.append(random.randint(0, 10000))
 
         if self.__size is 1:
             self.__max_number_of_creatures = 2
@@ -21,6 +31,17 @@ class Location:
             self.__max_number_of_creatures = 8
         elif self.__size is 4:
             self.__max_number_of_creatures = 100
+
+    def open(self, key):
+        if self.__is_locked:
+            if key == self.__key:
+                self.__is_locked = False
+
+    def take_a_key(self):
+        if self.__is_locked:
+            return self.__key
+        else:
+            return None
 
     def get_type(self):
         return self.__size
@@ -77,8 +98,12 @@ class Location:
         return False
 
     def show_all_creatures(self):
-        for obj in self.__all_creatures:
-            try:
-                obj.info()
-            except:
-                print(obj)
+        if not self.__is_locked:
+            for obj in self.__all_creatures:
+                try:
+                    obj.info()
+                except:
+                    print(obj)
+
+        else:
+            print("room is closed")
