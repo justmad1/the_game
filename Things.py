@@ -327,3 +327,89 @@ class Chest(object):
             except:
                 pass
 
+
+class RandomCutting(Cutting):
+    """Random Cutting weapon"""
+
+    __id = 13
+
+    def get_class_id(self):
+        return self.__id
+
+    def __init__(self, lvl=1):
+        if lvl < 1:
+            lvl = 1
+        elif lvl > 10:
+            lvl = 10
+
+        name = str
+        weight = int
+        damage = int
+        type = int
+
+        #TODO rewrite
+        if lvl is 1:
+            pass
+
+        elif lvl is 2:
+            rand_type = random.randint(1, 2)
+            if rand_type is 1:
+                pass
+            else:
+                pass
+
+        elif lvl is 3:
+            rand_type = random.randint(1, 2)
+            if rand_type is 1:
+                pass
+            else:
+                pass
+
+        elif lvl is 4:
+            rand_type = random.randint(1, 3)
+            if rand_type is 1:
+                pass
+            elif rand_type is 2:
+                pass
+            else:
+                pass
+
+        elif lvl is 5:
+            rand_type = random.randint(1, 2)
+            if rand_type is 1:
+                pass
+            else:
+                pass
+
+        elif lvl is 6:
+            rand_type = random.randint(1, 2)
+            if rand_type is 1:
+                pass
+            else:
+                pass
+
+        elif lvl is 7:
+            rand_type = random.randint(1, 2)
+            if rand_type is 1:
+                pass
+            else:
+                pass
+
+        elif lvl is 8:
+            rand_type = random.randint(1, 2)
+            if rand_type is 1:
+                pass
+            else:
+                pass
+
+        elif lvl is 9:
+            rand_type = random.randint(1, 2)
+            if rand_type is 1:
+                pass
+            else:
+                pass
+
+        elif lvl is 10:
+            pass
+
+        Cutting.__init__(self, name, weight, damage, type, 10)

@@ -9,6 +9,9 @@
 8 - Arrow
 9 - Magic
 10 - Armor
+11 - Location
+12 - Chest
+13 - RandomCutting
 """
 
 

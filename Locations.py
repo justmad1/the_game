@@ -1,7 +1,7 @@
 import random
 
 
-class Location:
+class Location():
     """Main class of location"""
     __id = 11
 
