@@ -513,10 +513,3 @@ class RandomCutting(Cutting):
                 durability = 4
 
         Cutting.__init__(self, name, weight, damage, type, durability, lvl)
-
-w1 = RandomCutting(3)
-w2 = RandomCutting(4)
-w3 = RandomCutting(5)
-w1.info()
-w2.info()
-w3.info()
