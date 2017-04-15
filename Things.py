@@ -70,12 +70,16 @@ class Potion(Thing):
 
 class Weapon(Thing):                                        # !!   Do not use  !!
     """Class not for use, only for inheritance"""           # !!!!!!!!!!!!!!!!!!!
-    def __init__(self, name, weight, damage):
+    def __init__(self, name, weight, damage, level):
         self.__damage = damage
-        Thing.__init__(self, name, self.__damage, weight)
+        self.__level = level
+        Thing.__init__(self, name, self.__damage*2, weight)
 
     def get_damage(self):
         return self.__damage
+
+    def get_level(self):
+        return self.__level
 
     def increase_damage(self, i):
         self.__damage += i
@@ -94,16 +98,16 @@ class Cutting(Weapon):
     def get_class_id(self):
         return self.__id
 
-    def __init__(self, name="sword", weight=5, damage=10, type=1, durability=10):
+    def __init__(self, name="sword", weight=5, damage=10, type=1, durability=10, level=1):
         """1 - Sword; 2 - dagger; 3 - axe; 4 - hammer"""
         self.__type = type
         self.__durability = durability
         self.__is_magic = False
-        Weapon.__init__(self, name, weight, damage)
+        Weapon.__init__(self, name, weight, damage, level)
 
     def info(self):
         print(self.get_name(), "\nDamage:", self.get_damage(), "\nWeight:", self.get_weight(),
-              "\nDurability:", self.__durability)
+              "\nDurability:", self.__durability, "\nWeapon level:", self.get_level())
 
     def reduce_durability(self, r=1):
         self.__durability -= r
@@ -134,7 +138,8 @@ class Shooting(Weapon):
         Weapon.__init__(self, name, weight, damage)
 
     def info(self):
-        print(self.get_name(), "\nDamage:", self.get_damage(), "\nWeight:", self.get_weight())
+        print(self.get_name(), "\nDamage:", self.get_damage(), "\nWeight:", self.get_weight(),
+              "\nWeapon level:", self.get_level())
 
     def get_type(self):
         return self.__type
@@ -346,70 +351,172 @@ class RandomCutting(Cutting):
         weight = int
         damage = int
         type = int
+        durability = int
 
-        #TODO rewrite
+        #TODO rewrite names and check values
         if lvl is 1:
-            pass
+            damage = 3
+            weight = 1
+            name = "dagger"
+            type = 1
+            durability = 10
 
         elif lvl is 2:
             rand_type = random.randint(1, 2)
             if rand_type is 1:
-                pass
+                damage = random.randint(4, 6)
+                weight = damage - 2 - random.randint(0, 1)
+                name = "dagger"
+                type = 1
+                durability = 10
             else:
-                pass
+                damage = random.randint(7, 8)
+                weight = damage - 3 - random.randint(0, 1)
+                name = "sword"
+                type = 2
+                durability = 8
 
         elif lvl is 3:
             rand_type = random.randint(1, 2)
             if rand_type is 1:
-                pass
+                damage = random.randint(6, 8)
+                weight = damage - 3 - random.randint(0, 2)
+                name = "dagger"
+                type = 1
+                durability = 10
             else:
-                pass
+                damage = random.randint(8, 10)
+                weight = damage - 1 - random.randint(0, 1)
+                name = "sword"
+                type = 2
+                durability = 8
 
         elif lvl is 4:
             rand_type = random.randint(1, 3)
             if rand_type is 1:
-                pass
+                damage = random.randint(8, 10)
+                weight = damage - 4 - random.randint(0, 2)
+                name = "dagger"
+                type = 1
+                durability = 10
             elif rand_type is 2:
-                pass
+                damage = random.randint(10, 13)
+                weight = damage - 2 - random.randint(0, 2)
+                name = "sword"
+                type = 2
+                durability = 8
             else:
-                pass
+                damage = random.randint(12, 14)
+                weight = damage - 1 - random.randint(0, 2)
+                name = "axe"
+                type = 3
+                durability = 6
 
         elif lvl is 5:
             rand_type = random.randint(1, 2)
             if rand_type is 1:
-                pass
+                damage = random.randint(14, 17)
+                weight = damage - 2 - random.randint(0, 1)
+                name = "sword"
+                type = 2
+                durability = 8
             else:
-                pass
+                damage = random.randint(15, 19)
+                weight = damage - 1 - random.randint(0, 2)
+                name = "axe"
+                type = 3
+                durability = 6
 
         elif lvl is 6:
             rand_type = random.randint(1, 2)
             if rand_type is 1:
-                pass
+                damage = random.randint(18, 22)
+                weight = damage - 2 - random.randint(0, 1)
+                name = "sword"
+                type = 2
+                durability = 8
             else:
-                pass
+                damage = random.randint(20, 23)
+                weight = damage - random.randint(0, 1)
+                name = "axe"
+                type = 3
+                durability = 6
 
         elif lvl is 7:
             rand_type = random.randint(1, 2)
             if rand_type is 1:
-                pass
+                damage = 25
+                weight = damage - 3 - random.randint(0, 2)
+                name = "sword"
+                type = 2
+                durability = 8
             else:
-                pass
+                damage = random.randint(25, 30)
+                weight = damage - 3 + random.randint(0, 6)
+                name = "axe"
+                type = 3
+                durability = 6
 
         elif lvl is 8:
             rand_type = random.randint(1, 2)
             if rand_type is 1:
-                pass
+                damage = random.randint(30, 34)
+                weight = damage - 5 + random.randint(0, 9)
+                name = "hammer"
+                type = 4
+                durability = 4
             else:
-                pass
+                damage = random.randint(31, 35)
+                weight = damage - 4 + random.randint(0, 8)
+                name = "axe"
+                type = 6
 
         elif lvl is 9:
             rand_type = random.randint(1, 2)
             if rand_type is 1:
-                pass
+                damage = random.randint(34, 37)
+                weight = damage - 3 + random.randint(0, 10)
+                name = "hammer"
+                type = 4
+                durability = 4
             else:
-                pass
+                damage = random.randint(31, 35)
+                weight = damage - 4 + random.randint(0, 8)
+                name = "axe"
+                type = 6
 
         elif lvl is 10:
-            pass
+            rand_type = random.randint(1, 4)
+            if rand_type is 1:
+                damage = random.randint(30, 32)
+                weight = damage - 12 + random.randint(0, 12)
+                name = "dagger"
+                type = 10
+                durability = 10
+            elif rand_type is 2:
+                damage = random.randint(33, 36)
+                weight = damage - 5 + random.randint(0, 7)
+                name = "sword"
+                type = 8
+                durability = 4
+            elif rand_type is 3:
+                damage = random.randint(36, 39)
+                weight = damage - 4 + random.randint(0, 9)
+                name = "axe"
+                type = 6
+                durability = 4
+            elif rand_type is 4:
+                damage = random.randint(38, 42)
+                weight = damage - 3 + random.randint(0, 12)
+                name = "hammer"
+                type = 4
+                durability = 4
 
-        Cutting.__init__(self, name, weight, damage, type, 10)
+        Cutting.__init__(self, name, weight, damage, type, durability, lvl)
+
+w1 = RandomCutting(3)
+w2 = RandomCutting(4)
+w3 = RandomCutting(5)
+w1.info()
+w2.info()
+w3.info()
