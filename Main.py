@@ -23,7 +23,8 @@ import sys
 import random
 import threading
 try:
-    import pygame
+    from pygame import *
+    from tkinter import *
 except ModuleNotFoundError:
     pass
 EXIT = False
@@ -261,7 +262,7 @@ def test_room(hero):
 
                 obj = Things
                 if choose is 1:
-                    obj = Things.Armor("armor", 1, lvl * 2 + lvl * 2, lvl * 3)            # Поменять !!!!!!!!!!!!!
+                    obj = Things.Armor("armor", 1, lvl * 2 + lvl * 2, lvl * 3)
                 elif choose is 2:
                     obj = Things.Armor("helmet", 2, lvl*2, lvl)
                 elif choose is 3:
