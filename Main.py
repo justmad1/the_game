@@ -233,13 +233,14 @@ def test_room(hero):
 
                 obj = Things
                 if choose is 1:
-                    obj = Things.Сutting("sword", weight=2 * lvl + 2, damage=4 * lvl + 2, type=1, durability=10)
+                    obj = Things.Cutting("sword", weight=2 * lvl + 2, damage=4 * lvl + 2, type=1, durability=10)
                 elif choose is 2:
-                    obj = Things.Сutting("dagger", weight=1 * lvl + 1, damage=2 * lvl + 2, type=2, durability=10)
+                    obj = Things.Cutting("dagger", weight=1 * lvl + 1,
+                                         damage=2 * lvl + 2, type=2, durability=10)
                 elif choose is 3:
-                    obj = Things.Сutting("axe", weight=3 * lvl + 2, damage=5 * lvl + 2, type=2, durability=10)
+                    obj = Things.Cutting("axe", weight=3 * lvl + 2, damage=5 * lvl + 2, type=2, durability=10)
                 elif choose is 4:
-                    obj = Things.Сutting("hammer", weight=4 * lvl, damage=6 * lvl, type=2, durability=10)
+                    obj = Things.Cutting("hammer", weight=4 * lvl, damage=6 * lvl, type=2, durability=10)
                 elif choose is 5:
                     obj = Things.Shooting("bow", weight=2 * lvl, damage=2 * lvl + 1, type=1)
                 elif choose is 6:
@@ -378,7 +379,8 @@ def test_room(hero):
                         print("Зелье", item.get_name(), "использовано на себя")
                         hero.remove_from_inventory_by_obj(item)
                     else:
-                        print("Зелье", item.get_name(), "использовано на", room_creatures[choose-1].get_name())
+                        print("Зелье", item.get_name(), "использовано на",
+                              room_creatures[choose-1].get_name())
                         hero.remove_from_inventory_by_obj(item)
             elif id is 6 or id is 7:
                 print("Вы выбрали оружие", item.get_name())
@@ -456,6 +458,5 @@ def play_music():
 def main():
     hero = Creatures.MainHero.create()
     hero = test_room(hero)
-
 
 main()

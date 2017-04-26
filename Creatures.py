@@ -182,8 +182,9 @@ class MainHero(LiveCreature):
 
     def __game_over(self):
         self.die()
-        #print("You are dead! Game is over")
-        sys.exit("gg")
+        print("You are dead! Game is over")
+        #sys.exit("gg")
+        #TODO go to begin
 
     def uplevel(self, lv=1):
         self.__level += lv
