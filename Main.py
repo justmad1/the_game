@@ -23,6 +23,8 @@ import sys
 import random
 import threading
 try:
+    import pygame
+    import tkinter
     from pygame import *
     from tkinter import *
 except ModuleNotFoundError:
@@ -457,6 +459,25 @@ def play_music():
 
 def main():
     hero = Creatures.MainHero.create()
-    hero = test_room(hero)
+    #hero = test_room(hero)
+    window = pygame.display.set_mode((580, 500))
+    pygame.display.set_caption("hello motherfucker")
+
+    background_image = pygame.image.load("s.png").convert()
+
+    loop = True
+    while loop:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    loop = False
+
+            if event.type == pygame.QUIT:
+                loop = False
+
+
+        window.blit(background_image, (0, 0))
+        pygame.display.flip()
+
 
 main()
