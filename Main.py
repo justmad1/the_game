@@ -460,10 +460,13 @@ def play_music():
 def main():
     hero = Creatures.MainHero.create()
     #hero = test_room(hero)
+
+    pygame.init()
     window = pygame.display.set_mode((580, 500))
     pygame.display.set_caption("hello motherfucker")
 
     background_image = pygame.image.load("s.png").convert()
+    clock = pygame.time.Clock()
 
     loop = True
     while loop:
@@ -475,9 +478,13 @@ def main():
             if event.type == pygame.QUIT:
                 loop = False
 
-
+        font = pygame.font.SysFont('Tahoma', 25, True)
+        text = font.render("My text", True, (0, 0, 0))
         window.blit(background_image, (0, 0))
+        window.blit(text, [250, 250])
         pygame.display.flip()
+
+        clock.tick(60)
 
 
 main()
