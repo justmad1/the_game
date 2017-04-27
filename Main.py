@@ -479,9 +479,9 @@ def main():
                 loop = False
 
         font = pygame.font.SysFont('Tahoma', 25, True)
-        text = font.render("My text", True, (0, 0, 0))
+        text = font.render("Welcome to my game!", True, (0, 0, 0))
         window.blit(background_image, (0, 0))
-        window.blit(text, [250, 250])
+        window.blit(text, [200, 250])
         pygame.display.flip()
 
         clock.tick(60)
