@@ -18,6 +18,7 @@
 import Creatures
 import Things
 import time
+from time import *
 import os
 import sys
 import random
@@ -38,7 +39,6 @@ def play_song():
     while True:
         pygame.mixer.music.play()
         for i in range(2900):
-            time.sleep(0.1)
             if EXIT is True:
                 pygame.mixer.music.stop()
                 return
@@ -451,16 +451,12 @@ def play_music():
     try:
         pygame.init()
         os.system("clear")
-        if input("Включить музыку?\n1 - Да\n>") is "1":
-            threading.Thread(target=play_song).start()
+        threading.Thread(target=play_song).start()
     except NameError or ValueError:
         pass
 
 
-def main():
-    hero = Creatures.MainHero.create()
-    #hero = test_room(hero)
-
+def create_window():
     pygame.init()
     window = pygame.display.set_mode((580, 500))
     pygame.display.set_caption("hello motherfucker")
@@ -486,5 +482,12 @@ def main():
 
         clock.tick(60)
 
+
+def main():
+    hero = Creatures.MainHero.create()
+    #hero = test_room(hero)
+
+    play_music()
+    create_window()
 
 main()
