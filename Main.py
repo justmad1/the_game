@@ -455,39 +455,13 @@ def play_music():
     except NameError or ValueError:
         pass
 
-
-def create_window():
-    pygame.init()
-    window = pygame.display.set_mode((580, 500))
-    pygame.display.set_caption("hello motherfucker")
-
-    background_image = pygame.image.load("s.png").convert()
-    clock = pygame.time.Clock()
-
-    loop = True
-    while loop:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    loop = False
-
-            if event.type == pygame.QUIT:
-                loop = False
-
-        font = pygame.font.SysFont('Tahoma', 25, True)
-        text = font.render("Welcome to my game!", True, (0, 0, 0))
-        window.blit(background_image, (0, 0))
-        window.blit(text, [200, 250])
-        pygame.display.flip()
-
-        clock.tick(60)
+def start_window():
+    print("Вы используете ОС", get_os())
 
 
 def main():
     hero = Creatures.MainHero.create()
-    #hero = test_room(hero)
+    start_window()
 
-    play_music()
-    create_window()
 
 main()
