@@ -34,14 +34,15 @@ EXIT = False
 
 
 def play_song():
-    global EXIT
-    pygame.mixer.music.load('sounds/epic.ogg')
+    pygame.init()
+    song = pygame.mixer.Sound('sounds/epic.ogg')
+    clock = pygame.time.Clock()
+    song.play()
     while True:
-        pygame.mixer.music.play()
-        for i in range(2900):
-            if EXIT is True:
-                pygame.mixer.music.stop()
-                return
+        clock.tick(60)
+        if EXIT is True:
+            break
+    pygame.quit()
 
 
 def get_os():
@@ -58,7 +59,8 @@ def get_os():
 
 
 def stop_music():
-    os.system("")
+    global EXIT
+    EXIT = True
 
 
 def say_hello():
@@ -455,13 +457,25 @@ def play_music():
     except NameError or ValueError:
         pass
 
+
+def exit():
+    global EXIT
+    EXIT = True
+
+
 def start_window():
+    play_music()
     print("Вы используете ОС", get_os())
+    sleep(2)
+    os.system('clear')
+    print('     THE WAY OUT...')
 
 
 def main():
     hero = Creatures.MainHero.create()
     start_window()
 
+    sleep(10)
+    exit()
 
 main()
