@@ -29,12 +29,13 @@ try:
     from pygame import *
     from tkinter import *
 except ModuleNotFoundError:
-    pass
+    print("pygame module not found!")
 EXIT = False
 
 
-def play_song():
+def play_music_bg():
     pygame.init()
+    os.system("clear")
     song = pygame.mixer.Sound('sounds/epic.ogg')
     clock = pygame.time.Clock()
     song.play()
@@ -51,7 +52,7 @@ def get_os():
     if _platform == "linux" or _platform == "linux2":
         o_s = "linux"
     elif _platform == "darwin":
-        o_s = "mac"
+        o_s = "mac os"
     elif _platform == "win32":
         o_s = "windows"
 
@@ -449,33 +450,36 @@ def test_room(hero):
                 room_creatures.remove(obj)
 
 
-def play_music():
-    try:
-        pygame.init()
-        os.system("clear")
-        threading.Thread(target=play_song).start()
-    except NameError or ValueError:
-        pass
-
-
-def exit():
-    global EXIT
-    EXIT = True
+def room_0():
+    print("""
+    
+    """)
 
 
 def start_window():
-    play_music()
-    print("Вы используете ОС", get_os())
+    print("You are using", get_os())
     sleep(2)
     os.system('clear')
-    print('     THE WAY OUT...')
+    threading.Thread(target=play_music_bg).start()
+    sleep(1)
+    os.system('clear')
+    print('   THE WAY OUT', end='')
+    sys.stdout.flush()
+    sleep(1)
+    for i in range(3):
+        print('.', end='')
+        sys.stdout.flush()
+        sleep(1)
+    print()
 
 
 def main():
+    say_hello()
+    os.system('clear')
     hero = Creatures.MainHero.create()
     start_window()
 
-    sleep(10)
-    exit()
+    sleep(2)
+    stop_music()
 
 main()

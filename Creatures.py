@@ -173,7 +173,7 @@ class MainHero(LiveCreature):
         self.__inventory = []
         self.__current_weight = 0
         self.__max_weight = 100
-        print("Hello my friend")
+
 
     def __del__(self):
         MainHero.__instance = None
