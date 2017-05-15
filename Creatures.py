@@ -410,4 +410,3 @@ class RandomСreature(LiveCreature):
         m_stamina = random.randint(1+level, 8+level*2)
         defense = random.randint(level, 5+level)
         LiveCreature.__init__(self, all[x], max_hp, 0, m_stamina, d_attack, defense)
-

@@ -450,17 +450,69 @@ def test_room(hero):
                 room_creatures.remove(obj)
 
 
-def room_0():
+def room_0(hero):
+    os.system('clear')
+    print("Я ничего не могу вспомнить", end="")
+    sys.stdout.flush()
+    sleep(1)
+    for i in range(3):
+        print('.', end='')
+        sys.stdout.flush()
+        sleep(1)
+    sleep(1)
+    print("\nНажмите (Enter) чтобы осмотреться.")
+    input()
+    os.system('clear')
+
+    print("\nКажется я в какой-то... ", end="")
+    sleep(1)
+    print("пещере")
+    sleep(2)
+    print("Что я здесь делаю?")
+    sleep(2)
+    print("Где все мои вещи?")
+    sleep(2)
+    print("Ничего не понимаю...")
+    sleep(2)
+    print("Что же делать?")
+    sleep(2)
     print("""
-    
+1 - Осмотреть все вокруг себя
+2 - Искать выход
+3 - Сидеть и ждать чуда
     """)
+    choose = int(input(">"))
+    if choose is 1:
+        print("Ох, кажется мне улыбнулась удача, я нашел какой-то ножик")
+        sleep(2)
+        print("теперь хоть от крыс отбиваться можно")
+
+    elif choose is 2:
+        print("Мне кажется, я вижу лазейку, присыпанную камнями")
+        sleep(2)
+        print("не самый лучший вариант, надо поискать еще\n")
+        for i in range(5):
+            print('.')
+            sleep(1)
+        print("\nТаак, вроде с дальнего угла пробивается лучик света, пойду туда, пожалуй\n")
+        sleep(1)
+
+
+    elif choose is 3:
+        print("Ленивая задница, ты же здесь здохнешь!")
+        sleep(2)
+        print("Нееет, так не пойдет, надо что-то делать")
+        sleep(2)
+        print("Я хочу домой...")
+
+        print("")
 
 
 def start_window():
     print("You are using", get_os())
     sleep(2)
     os.system('clear')
-    threading.Thread(target=play_music_bg).start()
+    # threading.Thread(target=play_music_bg).start()
     sleep(1)
     os.system('clear')
     print('   THE WAY OUT', end='')
@@ -471,6 +523,8 @@ def start_window():
         sys.stdout.flush()
         sleep(1)
     print()
+    print("Нажмите (Enter) для начала.")
+    input()
 
 
 def main():
@@ -478,8 +532,10 @@ def main():
     os.system('clear')
     hero = Creatures.MainHero.create()
     start_window()
+    room_0(hero)
 
     sleep(2)
     stop_music()
+
 
 main()
