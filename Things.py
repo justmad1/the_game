@@ -13,7 +13,7 @@ class Thing(object):
         self.__weight = weight
 
     def info(self):
-        print(self.__name, "\nCost: ", self.__cost, "\nWeight: ", self.__weight)
+        print(self.__name, "\nСтоимость: ", self.__cost, "\nВес: ", self.__weight)
 
     def get_name(self):
         return self.__name
@@ -37,7 +37,7 @@ class Potion(Thing):
     def get_class_id(self):
         return self.__id
 
-    def __init__(self, name="heal", type=1, value=1):
+    def __init__(self, name="Лечение", type=1, value=1):
         """1 - Add health; 2 - Add mana; 3 - Reduce health; 4 - Reduce mana"""
         Thing.__init__(self, name, value**2, 1)
         self.__type = type
@@ -45,15 +45,15 @@ class Potion(Thing):
         self.__is_used = False
 
     def info(self):
-            print(self.get_name(), "\nCost: ", self.get_cost(), "\nWeight: ", self.get_weight())
+            print(self.get_name(), "\nСтоимость: ", self.get_cost(), "\nВес: ", self.get_weight())
             if self.__type is 1:
-                print("Add health: ", self.__value)
+                print("Добавляет здоровья: ", self.__value)
             if self.__type is 2:
-                print("Add mana: ", self.__value)
+                print("Добавляет маны: ", self.__value)
             if self.__type is 3:
-                print("Reduce health: ", self.__value)
+                print("Отнимает здоровья: ", self.__value)
             if self.__type is 4:
-                print("Reduce mana: ", self.__value)
+                print("Отнимает маны: ", self.__value)
 
     def get_is_used(self):
         return self.__is_used
@@ -65,7 +65,7 @@ class Potion(Thing):
         return self.__type
 
     def reduce_weight(self, r):
-        print("Cannot reduce weight of a potion!")
+        print("Невозможно уменьшить вес зелья!")
 
 
 class Weapon(Thing):                                        # !!   Do not use  !!
@@ -98,7 +98,7 @@ class Cutting(Weapon):
     def get_class_id(self):
         return self.__id
 
-    def __init__(self, name="sword", weight=5, damage=10, type=1, durability=10, level=1):
+    def __init__(self, name="Простой меч", weight=5, damage=10, type=1, durability=10, level=1):
         """1 - Sword; 2 - dagger; 3 - axe; 4 - hammer"""
         self.__type = type
         self.__durability = durability
@@ -106,8 +106,8 @@ class Cutting(Weapon):
         Weapon.__init__(self, name, weight, damage, level)
 
     def info(self):
-        print(self.get_name(), "\nDamage:", self.get_damage(), "\nWeight:", self.get_weight(),
-              "\nDurability:", self.__durability, "\nWeapon level:", self.get_level())
+        print(self.get_name(), "\nУрон:", self.get_damage(), "\nВес:", self.get_weight(),
+              "\nПрочность:", self.__durability, "\nУровень оружия:", self.get_level())
 
     def reduce_durability(self, r=1):
         self.__durability -= r
@@ -131,15 +131,15 @@ class Shooting(Weapon):
     def get_class_id(self):
         return self.__id
 
-    def __init__(self, name="bow", weight=3, damage=5, type=1):
+    def __init__(self, name="Простой лук", weight=3, damage=5, type=1):
         """1 - Bow; 2 - Crossbow;"""
         self.__type = type
         self.__is_magic = False
         Weapon.__init__(self, name, weight, damage)
 
     def info(self):
-        print(self.get_name(), "\nDamage:", self.get_damage(), "\nWeight:", self.get_weight(),
-              "\nWeapon level:", self.get_level())
+        print(self.get_name(), "\nУрон:", self.get_damage(), "\nВес:", self.get_weight(),
+              "\nУровень оружия:", self.get_level())
 
     def get_type(self):
         return self.__type
@@ -157,10 +157,10 @@ class Arrow(Weapon):
 
     def __init__(self, damage=3):
         self.__weight = 0
-        Weapon.__init__(self, "arrow", self.__weight, damage)
+        Weapon.__init__(self, "Стрела", self.__weight, damage)
 
     def info(self):
-        print(self.get_name(), "\nDamage:", self.get_damage())
+        print(self.get_name(), "\nУрон:", self.get_damage())
 
 
 class Magic(Thing):
@@ -178,17 +178,17 @@ class Magic(Thing):
         self.__type = type
         self.__summon_lvl = None
         if type is 1:
-            self.__name = "Fireball"
+            self.__name = "Фаербол"
             self.__damage = value
         elif type is 2:
-            self.__name = "Frost arrow"
+            self.__name = "Ледяная стрела"
             self.__can_freeze = True
             self.__damage = 1
         elif type is 3:
-            self.__name = "Heal"
+            self.__name = "Лечение"
             self.__heal = value
         elif type is 4:
-            self.__name = "Summon a creature"
+            self.__name = "Призыв существа"
             self.__summon = True
             self.__summon_lvl = value
         self.__weight = 0
@@ -197,14 +197,14 @@ class Magic(Thing):
     def info(self):
         print(self.get_name())
         if self.__type is 1:
-            print("Damage:", self.__damage)
+            print("Урон:", self.__damage)
         elif self.__type is 2:
-            print("Damage:", self.__damage, "\nFreeze an enemy")
+            print("Урон:", self.__damage, "\nЗамораживает противника")
             self.__damage = 1
         elif self.__type is 3:
-            print("Heal:", self.__heal)
+            print("Лечение:", self.__heal)
         elif self.__type is 4:
-            print("Summons a random level creature")
+            print("Призывает случайное уровневое сущесвто")
             self.__summon = True
 
     def get_type(self):
@@ -231,7 +231,7 @@ class Magic(Thing):
             self.__heal += add
 
     def reduce_weight(self, r):
-        print("Cannot reduce weight of magic!")
+        print("Невозможно снизить вес магии!")
 
 
 class Armor(Thing):
@@ -240,7 +240,7 @@ class Armor(Thing):
     def get_class_id(self):
         return self.__id
 
-    def __init__(self, name="Simple Armor", type=1, value=3, weight=6):
+    def __init__(self, name="Простая броня", type=1, value=3, weight=6):
         """1 - Armor; 2 - Helmet; 3 - Shield"""
         self.__name = name
         self.__type = type
@@ -249,8 +249,8 @@ class Armor(Thing):
         Thing.__init__(self, self.__name, value ** 2, weight)
 
     def info(self):
-        print(self.get_name(), "\nStrength:", self.__value, "\nWeight:", self.get_weight(),
-            "\nCost:", self.get_cost())
+        print(self.get_name(), "\nПрочность:", self.__value, "\nВес:", self.get_weight(),
+            "\nСтоимость:", self.get_cost())
 
     def get_type(self):
         return self.__type
@@ -283,7 +283,7 @@ class Chest(object):
     def show_things(self):
         if not self.__is_locked:
             if len(self.__all_things) is 0:
-                print("chest is empty")
+                print("Сундук пуст")
             else:
                 for obj in self.__all_things:
                     try:
@@ -292,7 +292,7 @@ class Chest(object):
                         print(obj)
                     print("-----------")
         else:
-            print("chest closed")
+            print("Сундук закрыт")
 
     def take_a_key(self):
         if self.__is_locked:
@@ -357,7 +357,7 @@ class RandomCutting(Cutting):
         if lvl is 1:
             damage = 3
             weight = 1
-            name = "dagger"
+            name = "Кинжал"
             type = 1
             durability = 10
 
@@ -366,13 +366,13 @@ class RandomCutting(Cutting):
             if rand_type is 1:
                 damage = random.randint(4, 6)
                 weight = damage - 2 - random.randint(0, 1)
-                name = "dagger"
+                name = "Кинжал"
                 type = 1
                 durability = 10
             else:
                 damage = random.randint(7, 8)
                 weight = damage - 3 - random.randint(0, 1)
-                name = "sword"
+                name = "Меч"
                 type = 2
                 durability = 8
 
@@ -381,13 +381,13 @@ class RandomCutting(Cutting):
             if rand_type is 1:
                 damage = random.randint(6, 8)
                 weight = damage - 3 - random.randint(0, 2)
-                name = "dagger"
+                name = "Кинжал"
                 type = 1
                 durability = 10
             else:
                 damage = random.randint(8, 10)
                 weight = damage - 1 - random.randint(0, 1)
-                name = "sword"
+                name = "Меч"
                 type = 2
                 durability = 8
 
@@ -396,19 +396,19 @@ class RandomCutting(Cutting):
             if rand_type is 1:
                 damage = random.randint(8, 10)
                 weight = damage - 4 - random.randint(0, 2)
-                name = "dagger"
+                name = "Кинжал"
                 type = 1
                 durability = 10
             elif rand_type is 2:
                 damage = random.randint(10, 13)
                 weight = damage - 2 - random.randint(0, 2)
-                name = "sword"
+                name = "Меч"
                 type = 2
                 durability = 8
             else:
                 damage = random.randint(12, 14)
                 weight = damage - 1 - random.randint(0, 2)
-                name = "axe"
+                name = "Топор"
                 type = 3
                 durability = 6
 
@@ -417,13 +417,13 @@ class RandomCutting(Cutting):
             if rand_type is 1:
                 damage = random.randint(14, 17)
                 weight = damage - 2 - random.randint(0, 1)
-                name = "sword"
+                name = "Меч"
                 type = 2
                 durability = 8
             else:
                 damage = random.randint(15, 19)
                 weight = damage - 1 - random.randint(0, 2)
-                name = "axe"
+                name = "Топор"
                 type = 3
                 durability = 6
 
@@ -432,13 +432,13 @@ class RandomCutting(Cutting):
             if rand_type is 1:
                 damage = random.randint(18, 22)
                 weight = damage - 2 - random.randint(0, 1)
-                name = "sword"
+                name = "Меч"
                 type = 2
                 durability = 8
             else:
                 damage = random.randint(20, 23)
                 weight = damage - random.randint(0, 1)
-                name = "axe"
+                name = "Топор"
                 type = 3
                 durability = 6
 
@@ -447,13 +447,13 @@ class RandomCutting(Cutting):
             if rand_type is 1:
                 damage = 25
                 weight = damage - 3 - random.randint(0, 2)
-                name = "sword"
+                name = "Меч"
                 type = 2
                 durability = 8
             else:
                 damage = random.randint(25, 30)
                 weight = damage - 3 + random.randint(0, 6)
-                name = "axe"
+                name = "Топор"
                 type = 3
                 durability = 6
 
@@ -462,13 +462,13 @@ class RandomCutting(Cutting):
             if rand_type is 1:
                 damage = random.randint(30, 34)
                 weight = damage - 5 + random.randint(0, 9)
-                name = "hammer"
+                name = "Молот"
                 type = 4
                 durability = 4
             else:
                 damage = random.randint(31, 35)
                 weight = damage - 4 + random.randint(0, 8)
-                name = "axe"
+                name = "Топор"
                 type = 6
 
         elif lvl is 9:
@@ -476,13 +476,13 @@ class RandomCutting(Cutting):
             if rand_type is 1:
                 damage = random.randint(34, 37)
                 weight = damage - 3 + random.randint(0, 10)
-                name = "hammer"
+                name = "Молот"
                 type = 4
                 durability = 4
             else:
                 damage = random.randint(31, 35)
                 weight = damage - 4 + random.randint(0, 8)
-                name = "axe"
+                name = "Топор"
                 type = 6
 
         elif lvl is 10:
@@ -490,25 +490,25 @@ class RandomCutting(Cutting):
             if rand_type is 1:
                 damage = random.randint(30, 32)
                 weight = damage - 12 + random.randint(0, 12)
-                name = "dagger"
+                name = "Кинжал"
                 type = 10
                 durability = 10
             elif rand_type is 2:
                 damage = random.randint(33, 36)
                 weight = damage - 5 + random.randint(0, 7)
-                name = "sword"
+                name = "Меч"
                 type = 8
                 durability = 4
             elif rand_type is 3:
                 damage = random.randint(36, 39)
                 weight = damage - 4 + random.randint(0, 9)
-                name = "axe"
+                name = "Топор"
                 type = 6
                 durability = 4
             elif rand_type is 4:
                 damage = random.randint(38, 42)
                 weight = damage - 3 + random.randint(0, 12)
-                name = "hammer"
+                name = "Молот"
                 type = 4
                 durability = 4
 

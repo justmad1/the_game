@@ -9,7 +9,7 @@ class LiveCreature(object):
     def get_class_id(self):
         return self.__id
 
-    def __init__(self, name="creature", m_health=10, m_mana=0, m_stamina=5, d_attack=5, defense=0):
+    def __init__(self, name="Существо", m_health=10, m_mana=0, m_stamina=5, d_attack=5, defense=0):
         self.__name = name
         self.__max_health = m_health
         self.__health = self.__max_health
@@ -22,10 +22,10 @@ class LiveCreature(object):
         self.__defense = defense
 
     def info(self):
-        ret = str(self.__name) + "\nHealth: " + str(self.__health) + "/" + \
-              str(self.__max_health) + "\nMana: " + str(self.__mana) + "/" + str(self.__max_mana) + \
-              "\nStamina:" + str(self.get_current_stamina()) + "/" + str(self.get_max_stamina()) + \
-              "\nAttack: " + str(self.__attack) + "\nDefense: " + str(self.__defense)
+        ret = str(self.__name) + "\nЗдоровье: " + str(self.__health) + "/" + \
+              str(self.__max_health) + "\nМана: " + str(self.__mana) + "/" + str(self.__max_mana) + \
+              "\nВыносливость:" + str(self.get_current_stamina()) + "/" + str(self.get_max_stamina()) + \
+              "\nАтака: " + str(self.__attack) + "\nБроня: " + str(self.__defense)
         print(ret)
 
     def die(self):
@@ -159,7 +159,7 @@ class MainHero(LiveCreature):
         else:
             raise Exception
 
-    def __init__(self, name="Dima"):
+    def __init__(self, name="Дима"):
         LiveCreature.__init__(self, name, 30, 20, 10, 10)
         self.__level = 1
         self.__weapon = None
@@ -182,7 +182,7 @@ class MainHero(LiveCreature):
 
     def __game_over(self):
         self.die()
-        print("You are dead! Game is over")
+        print("Вы мертвы! Игра закончена!")
         #sys.exit("gg")
         #TODO go to begin
 
@@ -199,20 +199,20 @@ class MainHero(LiveCreature):
 
     def info(self):
         print("\n   ", self.get_name())
-        print("Health:", self.get_current_health(), "/", self.get_max_health())
-        print("Mana:", self.get_current_mana(), "/", self.get_max_mana())
-        print("Stamina:", self.get_current_stamina(), "/", self.get_max_stamina())
+        print("Здоровье:", self.get_current_health(), "/", self.get_max_health())
+        print("Мана:", self.get_current_mana(), "/", self.get_max_mana())
+        print("Выносливость:", self.get_current_stamina(), "/", self.get_max_stamina())
 
         if not self.__equiped_weapon:
-            print("Attack:", self.get_current_attack())
+            print("Атака:", self.get_current_attack())
         else:
-            print("Weapon attack", self.get_current_attack())
+            print("Атака оружия", self.get_current_attack())
         if self.__wear_armor:
-            print("Armor:", self.__armor.get_value())
+            print("Броня (доспехи):", self.__armor.get_value())
         if self.__wear_helmet:
-            print("Helmet:", self.__helmet.get_value())
+            print("Шлем:", self.__helmet.get_value())
         if self.__wear_shield:
-            print("Shield:", self.__shield.get_value())
+            print("Щит:", self.__shield.get_value())
 
     def attack(self):
         attack = None
@@ -248,16 +248,16 @@ class MainHero(LiveCreature):
         if obj.get_weight() <= self.__max_weight - self.__current_weight:
             self.__current_weight += obj.get_weight()
             self.__inventory.append(obj)
-            print(obj.get_name(), "added to inventory!")
+            print(obj.get_name(), "добавлен в инвентарь !")
         else:
-            print("No more space in inventory!")
+            print("В инвентаре больше нет места !")
 
     def show_inventory(self):
         if len(self.__inventory) is 0:
-            print("Your INVENTORY is empty!")
+            print("Ваш инвентарь пуст !")
         else:
-            print("\nINVENTORY")
-            print("Weight: ", self.__current_weight, "/", self.__max_weight)
+            print("\nИНВЕНТАРЬ")
+            print("Вес: ", self.__current_weight, "/", self.__max_weight)
             print("-------------\n")
             for obj in self.__inventory:
                 obj.info()
@@ -296,7 +296,7 @@ class MainHero(LiveCreature):
 
     def put_on_armor(self, armor):
         if self.__wear_armor:
-            print("Take off your armor to wear a new one")
+            print("На Вас уже надета броня")
             return
         else:
             try:
@@ -308,7 +308,7 @@ class MainHero(LiveCreature):
 
     def put_on_helmet(self, helmet):
         if self.__wear_helmet:
-            print("Take off your helmet to wear a new one")
+            print("На Вас уже надет шлем")
             return
         else:
             try:
@@ -320,7 +320,7 @@ class MainHero(LiveCreature):
 
     def equip_a_shield(self, shield):
         if self.__wear_shield:
-            print("Put off your current shield to take a new one")
+            print("У Вас уже экипирован щит")
         else:
             try:
                 self.remove_from_inventory_by_obj(shield)
@@ -336,7 +336,7 @@ class MainHero(LiveCreature):
 
     def equip_a_weapon(self, weapon):
         if self.__equiped_weapon:
-            print("Put off your current weapon to take a new one")
+            print("У Вас уже экипированно оружие")
             return
         else:
             try:
