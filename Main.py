@@ -30,12 +30,22 @@ try:
     from tkinter import *
 except ModuleNotFoundError:
     print("pygame module not found!")
+
 EXIT = False
 
 sleep_delay = 0
 
 room1 = Locations.Location("Тюрьма", 1, True)
 
+
+def fast_win():
+    os.system('clear')
+    print("   хмм", end="")
+    sys.stdout.flush()
+    sleep(1)
+    print(" что ж, не лучший способ проходить игры, но ты победил")
+    sleep(3)
+    print("\n    Тайна замка так и осталась неразгаданной!")
 
 def play_music_bg():
     pygame.init()
@@ -566,12 +576,14 @@ def room_0():
 
 
 def room_1(key):
+    next_room = int
     os.system('clear')
 
     print("Таак, эта комната похоже на какую-то темницу")
     sleep(sleep_delay)
     print("Тут есть решетчатое окно, так вот откуда пробивался свет")
     sleep(sleep_delay)
+
     if key in hero.get_keys():
         print("Тут есть дверь, стоит попробовать открыть дверь ключом, что я нашел")
     else:
@@ -583,6 +595,7 @@ def room_1(key):
 
     while True:
         os.system('clear')
+
         if key in hero.get_keys():
             print("1 - Попытаться открыть дверь ключом")
         else:
@@ -591,7 +604,10 @@ def room_1(key):
         print("3 - Осмотреться получше")
         print("4 - Вернуться назад в пещеру")
 
-        choose = int(input(">"))
+        try:
+            choose = int(input(">"))
+        except:
+            continue
 
         if choose is 1:
             if key in hero.get_keys():
@@ -606,26 +622,104 @@ def room_1(key):
                     sleep(sleep_delay/2)
                 print("\n(Enter) - Выйти из темницы")
 
-                room_2()  # go to 2nd room
+                next_room = 1
+                break
             else:
                 print("Вряд ли это поможет, это толстая тюремная дверь из дерева\
                  со стальными прутьями, ее ногой не выбьешь!")
                 sleep(sleep_delay)
+
         elif choose is 2:
             print("Таак, у меня есть какой-то ножик, мне действительно стоит попробовать")
             sleep(sleep_delay/2)
-            choose = int(input("1 - Начать пилить\n2 - Да не, бред какой-то\n>"))
-            if choose is 1:
+
+            try:
+                choose2 = int(input("1 - Начать пилить(нельзя отменить)\n2 - Да не, бред какой-то\n>"))
+            except:
+                continue
+            
+            if choose2 is 1:
                 print("Что ж, ладно...")
                 for i in range(3600):
                     os.system('clear')
                     print(i, "из и 3600")
                     sleep(1)
 
+                next_room = 2
+                break
+            else:
+                continue
+
         elif choose is 3:
             print("Похоже что в этой комнате больше ничего нет, даже осматривать нечего")
+            continue
+
         elif choose is 4:
-            room_0()
+            next_room = 0
+            break
+
+    if choose is 1:
+        room_2()
+    elif choose is 2:
+        fast_win()
+    elif choose is 4:
+        room_0()
+
+def room_2():
+    os.system('clear')
+    print("Я попал в коридор темницы")
+    sleep(sleep_delay/2)
+    print("Странно... ", end="")
+    sleep(sleep_delay/2)
+    print("это место кажется мне знакомым")
+    sleep(sleep_delay)
+    print("Всюду раздаются душераздирающие крики и стоны")
+    sleep(sleep_delay)
+    print("Кто эти люди? Рабы, жестокие убийцы или же воры?")
+    sleep(sleep_delay)
+    print("Ладно, надо идти дальше, не могу здесь находится")
+    sleep(sleep_delay)
+
+    while True:
+
+        try:
+            choose = int(input("1 - Пойти дальше по коридору\n2 - Подойти и поговорить с одним из заключенных\n>"))
+        except:
+            os.system('clear')
+            continue
+
+        sleep(2)
+        if choose is 1:
+            break
+        elif choose is 2:
+            print("-Приветствю, кто ты друг мой?")
+            sleep(sleep_delay)
+            print("-(Заключенный)Грядущее не ведает отсрочки.")
+            sleep(sleep_delay)
+            print("-Как и за что ты сюда попал?")
+            sleep(sleep_delay)
+            print("-(Заключенный)Господь, за грех попасть сюда!")
+            sleep(sleep_delay)
+            print("-О чём ты говоришь?")
+            sleep(sleep_delay)
+            print("-(Заключенный)Пророчество уже вот-вот сбудется!")
+            sleep(sleep_delay)
+            print("-Какое пророчество? Я тебя не понимаю.")
+            sleep(sleep_delay)
+            print("Видимо поговорить с ними не получится.")
+            sleep(sleep_delay)
+            print("Кто-то лишил их разума. Нужно выяснить, что здесь происходит.")
+            sleep(sleep_delay)
+            break
+        else:
+            continue
+
+    room_4()
+
+
+def room_4():
+    os.system('clear')
+    print("")
 
 
 def start_window():

@@ -189,7 +189,6 @@ class MainHero(LiveCreature):
 
     def __game_over(self):
         self.die()
-        print("Вы мертвы! Игра закончена!")
         #sys.exit("gg")
         #TODO go to begin
 
