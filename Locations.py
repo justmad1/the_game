@@ -1,7 +1,7 @@
 import random
 
 
-class Location():
+class Location(object):
     """Main class of location"""
     __id = 11
 
@@ -15,7 +15,7 @@ class Location():
         self.__max_number_of_creatures = 0
         self.__current_number_of_creatures = 0
         self.__size = size
-        self.__is_locked=locked
+        self.__is_locked = locked
         self.__key = []
 
         if self.__is_locked:

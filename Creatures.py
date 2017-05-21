@@ -160,7 +160,7 @@ class MainHero(LiveCreature):
             raise Exception
 
     def __init__(self, name="Дима"):
-        LiveCreature.__init__(self, name, 30, 20, 10, 10)
+        LiveCreature.__init__(self, name, 10, 10, 10, 1)
         self.__level = 1
         self.__weapon = None
         self.__equiped_weapon = False
@@ -173,7 +173,14 @@ class MainHero(LiveCreature):
         self.__inventory = []
         self.__current_weight = 0
         self.__max_weight = 100
+        self.__keys = []
 
+    def add_key(self, key):
+        print("--Новый ключ добавлен!")
+        self.__keys.append(key)
+
+    def get_keys(self):
+        return self.__keys
 
     def __del__(self):
         MainHero.__instance = None
@@ -248,7 +255,7 @@ class MainHero(LiveCreature):
         if obj.get_weight() <= self.__max_weight - self.__current_weight:
             self.__current_weight += obj.get_weight()
             self.__inventory.append(obj)
-            print(obj.get_name(), "добавлен в инвентарь !")
+            print("--", obj.get_name(), "добавлен в инвентарь !")
         else:
             print("В инвентаре больше нет места !")
 

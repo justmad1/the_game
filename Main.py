@@ -14,7 +14,7 @@
 13 - RandomCutting
 """
 
-
+import Locations
 import Creatures
 import Things
 import time
@@ -31,6 +31,10 @@ try:
 except ModuleNotFoundError:
     print("pygame module not found!")
 EXIT = False
+
+sleep_delay = 0
+
+room1 = Locations.Location("Тюрьма", 1, True)
 
 
 def play_music_bg():
@@ -450,80 +454,194 @@ def test_room(hero):
                 room_creatures.remove(obj)
 
 
-def room_0(hero):
+def some_words():
     os.system('clear')
     print("Я ничего не могу вспомнить", end="")
     sys.stdout.flush()
-    sleep(1)
+    sleep(sleep_delay/2)
     for i in range(3):
         print('.', end='')
         sys.stdout.flush()
-        sleep(1)
-    sleep(1)
+        sleep(sleep_delay/2)
+    sleep(sleep_delay/2)
     print("\nНажмите (Enter) чтобы осмотреться.")
     input()
     os.system('clear')
 
     print("\nКажется я в какой-то... ", end="")
-    sleep(1)
+    sleep(sleep_delay/2)
     print("пещере")
-    sleep(2)
+    sleep(sleep_delay)
     print("Что я здесь делаю?")
-    sleep(2)
+    sleep(sleep_delay)
     print("Где все мои вещи?")
-    sleep(2)
+    sleep(sleep_delay)
     print("Ничего не понимаю...")
-    sleep(2)
+    sleep(sleep_delay)
     print("Что же делать?")
-    sleep(2)
-    print("""
+    sleep(sleep_delay)
+
+
+def room_0():
+    choose = int
+    if len(hero.get_keys()) is not 1:
+        key = room1.take_a_key()
+    else:
+        key = hero.get_keys()[0]
+
+    while True:
+        os.system('clear')
+
+        print("""
 1 - Осмотреть все вокруг себя
 2 - Искать выход
 3 - Сидеть и ждать чуда
-    """)
-    choose = int(input(">"))
+            """)
 
-    if choose is 1:
-        base_knife = Things.Cutting("старый нож", 1, 1, 2)
-        hero.add_to_inventory(base_knife)
-        print("Ох, кажется мне улыбнулась удача, я нашел какой-то ножик")
-        sleep(2)
-        print("теперь хоть от крыс отбиваться можно")
+        try:
+            choose = int(input(">"))
+        except:
+            pass
 
-    elif choose is 2:
-        print("Мне кажется, я вижу лазейку, присыпанную камнями")
-        sleep(2)
-        print("не самый лучший вариант, надо поискать еще\n")
-        for i in range(5):
-            print('.')
-            sleep(1)
-        print("\nТаак, вроде с дальнего угла пробивается лучик света, пойду туда, пожалуй\n")
-        sleep(1)
+        if choose is 1:
+            if len(hero.get_keys()) is not 1:
+                base_knife = Things.Cutting("старый нож", 1, 1, 2)
+                hero.add_to_inventory(base_knife)
+                sleep(sleep_delay/2)
+                print("Ох, кажется мне улыбнулась удача, я нашел какой-то ножик")
+                sleep(sleep_delay)
+                print("теперь хоть от крыс отбиваться можно")
+                sleep(sleep_delay)
+                print("Кажется там лежит какой-то бедолага, похоже ему уже никто не поможет...")
+                sleep(sleep_delay)
+                print("Кто же его так...")
+                sleep(sleep_delay)
+            else:
+                print("Все что можно я уже осмотрел, больше ничего интересного")
+                sleep(sleep_delay)
+                break
 
-    elif choose is 3:
-        print("Ленивая задница, ты же здесь сдохнешь!")
-        sleep(2)
-        print("Нееет, так не пойдет, надо что-то делать")
-        sleep(2)
-        print("Я хочу домой...")
+            try:
+                сhoose2 = int(input("1 - Обыскать карманы\n(Любая клавиша) - Пойти дальше\n>"))
+            except:
+                сhoose2 = 2
 
-        print("")
+            if сhoose2 is 1:
+                key = room1.take_a_key()
+                hero.add_key(key)
+                print("В кармане нашелся какой-то ключ, что ж возьму, может пригодится")
+                sleep(sleep_delay)
+            else:
+                pass
+
+            if key in hero.get_keys():
+                print(True)
+            else:
+                print(False)
+
+            break
+
+        elif choose is 2:
+            print("Мне кажется, я вижу лазейку, присыпанную камнями")
+            sleep(sleep_delay)
+            print("не самый лучший вариант, надо поискать еще\n")
+            for i in range(5):
+                print('.')
+                sleep(sleep_delay/2)
+            print("\nТаак, вроде с дальнего угла пробивается лучик света, пойду туда, пожалуй\n")
+            sleep(sleep_delay/2)
+            break
+
+        elif choose is 3:
+            print("Ленивая задница, ты же здесь сдохнешь!")
+            sleep(sleep_delay)
+            print("Нееет, так не пойдет, надо что-то делать")
+            sleep(sleep_delay)
+            print("Я хочу домой...")
+
+        else:
+            pass
+
+    room_1(key)
+
+
+def room_1(key):
+    os.system('clear')
+
+    print("Таак, эта комната похоже на какую-то темницу")
+    sleep(sleep_delay)
+    print("Тут есть решетчатое окно, так вот откуда пробивался свет")
+    sleep(sleep_delay)
+    if key in hero.get_keys():
+        print("Тут есть дверь, стоит попробовать открыть дверь ключом, что я нашел")
+    else:
+        print("Дверь скорее всего запрета, но стоит все же попробовать")
+        sleep(sleep_delay)
+        input("(Enter) - Попытаться открыть дверь\n")
+        print("Нет, она точно закрыта")
+    sleep(sleep_delay)
+
+    while True:
+        os.system('clear')
+        if key in hero.get_keys():
+            print("1 - Попытаться открыть дверь ключом")
+        else:
+            print("1 - Продолжать выламывать дверь (серьезно?)")
+        print("2 - Попытаться спилить решетки на окне")
+        print("3 - Осмотреться получше")
+        print("4 - Вернуться назад в пещеру")
+
+        choose = int(input(">"))
+
+        if choose is 1:
+            if key in hero.get_keys():
+                print("Черт возьми, он подошел!")
+                sleep(sleep_delay/2)
+                print("Дверь со скрипом открывается", end="")
+                sys.stdout.flush()
+                sleep(sleep_delay/2)
+                for i in range(3):
+                    print('.', end='')
+                    sys.stdout.flush()
+                    sleep(sleep_delay/2)
+                print("\n(Enter) - Выйти из темницы")
+
+                room_2()  # go to 2nd room
+            else:
+                print("Вряд ли это поможет, это толстая тюремная дверь из дерева\
+                 со стальными прутьями, ее ногой не выбьешь!")
+                sleep(sleep_delay)
+        elif choose is 2:
+            print("Таак, у меня есть какой-то ножик, мне действительно стоит попробовать")
+            sleep(sleep_delay/2)
+            choose = int(input("1 - Начать пилить\n2 - Да не, бред какой-то\n>"))
+            if choose is 1:
+                print("Что ж, ладно...")
+                for i in range(3600):
+                    os.system('clear')
+                    print(i, "из и 3600")
+                    sleep(1)
+
+        elif choose is 3:
+            print("Похоже что в этой комнате больше ничего нет, даже осматривать нечего")
+        elif choose is 4:
+            room_0()
 
 
 def start_window():
     print("You are using", get_os())
-    sleep(2)
+    sleep(sleep_delay)
     os.system('clear')
-    # threading.Thread(target=play_music_bg).start()
-    sleep(1)
+    threading.Thread(target=play_music_bg).start()
+    sleep(sleep_delay/2)
     os.system('clear')
     print('   THE WAY OUT', end='')
     sys.stdout.flush()
-    sleep(1)
+    sleep(sleep_delay/2)
     for i in range(3):
         print('.', end='')
         sys.stdout.flush()
-        sleep(1)
+        sleep(sleep_delay/2)
     print()
     print("Нажмите (Enter) для начала.")
     input()
@@ -532,12 +650,12 @@ def start_window():
 def main():
     say_hello()
     os.system('clear')
-    hero = Creatures.MainHero.create()
-    start_window()
-    room_0(hero)
+    # start_window()
+    # some_words()
+    room_0()
 
-    sleep(2)
+    sleep(sleep_delay)
     stop_music()
 
-
+hero = Creatures.MainHero.create()
 main()
