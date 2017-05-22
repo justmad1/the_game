@@ -33,7 +33,7 @@ except ModuleNotFoundError:
 
 EXIT = False
 
-sleep_delay = 2 # Recommended - 2 seconds
+sleep_delay = 0 # Recommended - 2 seconds
 
 room1 = Locations.Location("Тюрьма", 1, True)
 
@@ -505,10 +505,18 @@ def some_words():
         sys.stdout.flush()
         sleep(sleep_delay/2)
     sleep(sleep_delay/2)
+    print("\n\nКак же меня зовут?")
+    name = input(">")
+    sleep(sleep_delay/2)
+    os.system('clear')
+    print("\nТочно, вспомнил", end=" ")
+    sys.stdout.flush()
+    print("меня зовут", name)
+    sleep(sleep_delay)
     print("\nНажмите (Enter) чтобы осмотреться.")
     input()
+    sleep(sleep_delay)
     os.system('clear')
-
     print("\nКажется я в какой-то... ", end="")
     sleep(sleep_delay/2)
     print("пещере")
@@ -521,6 +529,8 @@ def some_words():
     sleep(sleep_delay)
     print("Что же делать?")
     sleep(sleep_delay)
+
+    return name
 
 
 def room_0():
@@ -921,15 +931,18 @@ def room_2():
         print("Надо было не мешкаться...")
         sleep(sleep_delay)
 
-    room_4()
+    room_3()
 
 
-def room_4():
+def room_3():
     os.system('clear')
+    uplevel()
+    sleep(sleep_delay)
     print("")
 
 
 def start_window():
+    say_hello()
     print("You are using", get_os())
     sleep(sleep_delay)
     os.system('clear')
@@ -948,14 +961,24 @@ def start_window():
     input()
 
 
+def uplevel():
+    hero.uplevel()
+    print("\n-- Получен новый уровень!")
+    hero.info()
+    print()
+
+
 def main():
-    say_hello()
-    os.system('clear')
-    # start_window()
-    # some_words()
     room_0()
+    room_3()
 
     stop_music()
 
-hero = Creatures.MainHero.create()
-main()
+
+os.system('clear')
+# start_window()
+name = some_words()
+# name = "GG"
+hero = Creatures.MainHero.create(name)
+hero.info()
+# main()

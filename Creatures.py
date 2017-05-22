@@ -154,15 +154,15 @@ class MainHero(LiveCreature):
         return self.__id
 
     @staticmethod
-    def create():
+    def create(name):
         if MainHero.__instance is None:
             MainHero.__instance = True
-            return MainHero()
+            return MainHero(name)
         else:
             raise Exception
 
-    def __init__(self, name="Дима"):
-        LiveCreature.__init__(self, name, 10, 10, 10, 1)
+    def __init__(self, name):
+        LiveCreature.__init__(self, name, 5, 5, 5, 1)
         self.__level = 1
         self.__weapon = None
         self.__equiped_weapon = False
@@ -196,11 +196,12 @@ class MainHero(LiveCreature):
 
     def uplevel(self, lv=1):
         self.__level += lv
-        self.max_health_add(5)
-        self.health_add(5)
-        self.max_mana_add(5)
-        self.mana_add(5)
-        self.max_stamina_add(5)
+        self.max_health_add(2)
+        self.health_add(2)
+        self.max_mana_add(2)
+        self.mana_add(2)
+        self.max_stamina_add(2)
+        self.stamina_add(2)
 
     def get_level(self):
         return self.__level
@@ -224,6 +225,11 @@ class MainHero(LiveCreature):
 
     def attack(self):
         attack = None
+        if self.get_current_stamina() is 0:
+            return 0
+        else:
+            self.stamina_reduce()
+
         if self.__equiped_weapon:
             if self.__weapon.get_class_id() is 6:
                 self.__weapon.reduce_durability()
