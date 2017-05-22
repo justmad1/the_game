@@ -100,6 +100,7 @@ class Location(object):
     def show_all_creatures(self):
         if not self.__is_locked:
             for obj in self.__all_creatures:
+                print("-----------")
                 try:
                     obj.info()
                 except:

@@ -140,6 +140,8 @@ class LiveCreature(object):
     def reset_attack(self):
         self.__attack = self.__default_attack
 
+    def get_name(self):
+        return self.__name
 
 class MainHero(LiveCreature):
     """Creates a player hero. Only one object.  Example: *obj_name* = MainHero.create()"""
@@ -382,6 +384,9 @@ class MainHero(LiveCreature):
 
     def get_weapon(self):
         return self.__weapon
+
+    def get_name(self):
+        return self._LiveCreature__name
 
     def is_equiped_weapon(self):
         return self.__equiped_weapon

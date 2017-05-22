@@ -33,7 +33,7 @@ except ModuleNotFoundError:
 
 EXIT = False
 
-sleep_delay = 0
+sleep_delay = 2 # Recommended - 2 seconds
 
 room1 = Locations.Location("Тюрьма", 1, True)
 
@@ -46,6 +46,37 @@ def fast_win():
     print(" что ж, не лучший способ проходить игры, но ты победил")
     sleep(3)
     print("\n    Тайна замка так и осталась неразгаданной!")
+
+
+def inventory():
+    os.system('clear')
+    while True:
+        if hero.get_inventory():
+                print("0 - Удалить вещь из инвентаря")
+        else:
+            print("1 - Применить предмет")
+
+            if hero.is_equiped_weapon():
+                print("2 - Убрать оружие/магию в инвентарь")
+            if hero.is_equiped_armor():
+                print("3 - Убрать броню в инвентарь")
+            if hero.is_equiped_helmet():
+                print("4 - Убрать шлем в инвентарь")
+            if hero.is_equiped_shield():
+                print("5 - Убрать щит в инвентарь")
+            try:
+                choose = int(input(">"))
+            except ValueError:
+                continue
+            os.system("clear")
+            os.system("clear")
+            os.system("clear")
+
+
+
+    hero.show_inventory()
+
+
 
 def play_music_bg():
     pygame.init()
@@ -515,7 +546,7 @@ def room_0():
 
         if choose is 1:
             if len(hero.get_keys()) is not 1:
-                base_knife = Things.Cutting("старый нож", 1, 1, 2)
+                base_knife = Things.Cutting("старый нож", 1, 2, 2)
                 hero.add_to_inventory(base_knife)
                 sleep(sleep_delay/2)
                 print("Ох, кажется мне улыбнулась удача, я нашел какой-то ножик")
@@ -591,7 +622,7 @@ def room_1(key):
         sleep(sleep_delay)
         input("(Enter) - Попытаться открыть дверь\n")
         print("Нет, она точно закрыта")
-    sleep(sleep_delay)
+    sleep(sleep_delay*1.5)
 
     while True:
         os.system('clear')
@@ -637,7 +668,7 @@ def room_1(key):
                 choose2 = int(input("1 - Начать пилить(нельзя отменить)\n2 - Да не, бред какой-то\n>"))
             except:
                 continue
-            
+
             if choose2 is 1:
                 print("Что ж, ладно...")
                 for i in range(3600):
@@ -665,7 +696,22 @@ def room_1(key):
     elif choose is 4:
         room_0()
 
+def get_choise():
+    while True:
+        try:
+            choose = int(input(">"))
+            break
+        except:
+            continue
+
+    return choose
+
 def room_2():
+    room2 = Locations.Location("Коридор темницы", 1)
+    room2.add_creature(hero)
+    undead_dog = Creatures.LiveCreature("Скелет собаки", 2, d_attack=1)
+    room2.add_creature(undead_dog)
+
     os.system('clear')
     print("Я попал в коридор темницы")
     sleep(sleep_delay/2)
@@ -681,14 +727,13 @@ def room_2():
     sleep(sleep_delay)
 
     while True:
-
         try:
             choose = int(input("1 - Пойти дальше по коридору\n2 - Подойти и поговорить с одним из заключенных\n>"))
         except:
             os.system('clear')
             continue
 
-        sleep(2)
+        sleep(sleep_delay)
         if choose is 1:
             break
         elif choose is 2:
@@ -709,10 +754,172 @@ def room_2():
             print("Видимо поговорить с ними не получится.")
             sleep(sleep_delay)
             print("Кто-то лишил их разума. Нужно выяснить, что здесь происходит.")
-            sleep(sleep_delay)
+            sleep(sleep_delay * 1.5)
             break
         else:
             continue
+
+    for i in range(4):
+        print('.')
+        sleep(sleep_delay/2)
+
+    os.system('clear')
+    print("Я слышу какой-то стук по земле", end="")
+    sleep(sleep_delay/2)
+    print(", он приближается...\n")
+
+    while True:
+        print("""
+1 - Достать нож и выбежать из-за угла первым
+2 - Спрятаться в тени
+3 - Стоять и ждать что будет
+            """)
+
+        choose = get_choise()
+        if choose > 3 or choose < 1:
+            continue
+        else:
+            break
+
+    if choose is 1:
+        hero.equip_a_weapon(hero.get_inventory()[0])
+
+        print("ЧТООО ЗА..")
+        sleep(sleep_delay/2)
+        print("Передо мной стоит скелет огромной собаки... ", end="")
+        sleep(sleep_delay)
+        sys.stdout.flush()
+        print("с горящими красными глазами")
+        sleep(sleep_delay)
+        print("(Enter) - Атаковать первым")
+        input()
+        undead_dog.health_reduce(hero.attack())
+        room2.remove_creature_by_obj(undead_dog)
+        del(undead_dog)
+        os.system("clear")
+        print("Оо черт..")
+        sleep(sleep_delay)
+        print("Скелет развалился и глаза больше не горят")
+        sleep(sleep_delay)
+
+    elif choose is 2:
+        print("Мгновение...", end="")
+        sleep(sleep_delay/2)
+        sys.stdout.flush()
+        print(" и я уже стою в углу")
+        sleep(sleep_delay)
+        print("Свет сюда не падает, надо задержать дыхание...")
+        sleep(sleep_delay)
+
+        for i in range(3):
+            sleep(sleep_delay/2)
+            print('.')
+
+        print("ЧТООО ЗА..")
+        sleep(sleep_delay/2)
+        print("Передо мной стоит скелет огромной собаки... ", end="")
+        sleep(sleep_delay)
+        sys.stdout.flush()
+        print("с горящими красными глазами")
+        sleep(sleep_delay)
+        os.system('clear')
+        print("Черт, она бросилась на меня!")
+        sleep(sleep_delay/2)
+        hero.health_reduce(undead_dog.get_current_attack())
+        print('\n', hero.get_name(),'\nЗдоровье: ', hero.get_current_health(), "/", hero.get_max_health())
+        sleep(sleep_delay)
+
+        while True:
+            os.system('clear')
+            print("В инвентаре сейчас есть:")
+            hero.show_inventory()
+
+            print("\n1 - Экипировать нож и ударить\n2 - Ударить рукой")
+
+            choose2 = get_choise()
+
+            if choose2 is 1:
+                hero.equip_a_weapon(hero.get_inventory()[0])
+                undead_dog.health_reduce(hero.attack())
+            elif choose2 is 2:
+                undead_dog.health_reduce(hero.attack())
+            else:
+                continue 
+
+            os.system('clear')
+
+            if undead_dog.get_current_health() is 0:
+                room2.remove_creature_by_obj(undead_dog)
+                del(undead_dog)
+                os.system("clear")
+                print("Оо черт..")
+                sleep(sleep_delay)
+                print("Скелет развалился и глаза больше не горят")
+                sleep(sleep_delay)
+                break
+            else:
+                print('\n', undead_dog.get_name(),'\nЗдоровье: ', undead_dog.get_current_health(),"/", undead_dog.get_max_health())
+                sleep(sleep_delay)
+                print("Пес атаковал снова!")
+                sleep(sleep_delay/2)
+                hero.health_reduce(undead_dog.get_current_attack())
+                print('\n', hero.get_name(),'\nЗдоровье: ', hero.get_current_health(), "/", hero.get_max_health())
+                sleep(sleep_delay)
+
+
+    elif choose is 3:
+        print("Это точно не лучшая идея")
+
+        for i in range(3):
+            sleep(sleep_delay/2)
+            print('.')
+
+        print("ЧТООО ЗА..")
+        sleep(sleep_delay/2)
+        print("Передо мной стоит скелет огромной собаки... ", end="")
+        sleep(sleep_delay)
+        sys.stdout.flush()
+        print("с горящими красными глазами")
+        sleep(sleep_delay)
+        os.system('clear')
+        print("Черт, она бросилась на меня!")
+        sleep(sleep_delay/2)
+        hero.health_reduce(undead_dog.get_current_attack())
+        print('\n', hero.get_name(),'\nЗдоровье: ', hero.get_current_health(), "/", hero.get_max_health())
+        sleep(sleep_delay)
+
+        while True:
+            os.system('clear')
+
+            print("\n(Enter) - Ударить рукой")
+            choose2 = input()
+
+            undead_dog.health_reduce(hero.attack())
+
+            os.system('clear')
+
+            if undead_dog.get_current_health() is 0:
+                room2.remove_creature_by_obj(undead_dog)
+                del(undead_dog)
+                os.system("clear")
+                print("Оо черт..")
+                sleep(sleep_delay)
+                print("Скелет развалился и глаза больше не горят")
+                sleep(sleep_delay)
+                break
+            else:
+                print('\n', undead_dog.get_name(),'\nЗдоровье: ', undead_dog.get_current_health(),"/", undead_dog.get_max_health())
+                sleep(sleep_delay)
+                print("Пес атаковал снова!")
+                sleep(sleep_delay/2)
+                hero.health_reduce(undead_dog.get_current_attack())
+                print('\n', hero.get_name(),'\nЗдоровье: ', hero.get_current_health(), "/", hero.get_max_health())
+                sleep(sleep_delay)
+
+        print("Черт возьми, у меня же был нож")
+        sleep(sleep_delay)
+        print("Надо было не мешкаться...")
+        sleep(sleep_delay)
 
     room_4()
 
@@ -748,7 +955,6 @@ def main():
     # some_words()
     room_0()
 
-    sleep(sleep_delay)
     stop_music()
 
 hero = Creatures.MainHero.create()
