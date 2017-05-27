@@ -39,7 +39,7 @@ room1 = Locations.Location("Тюрьма", 1, True)
 
 
 def fast_win():
-    os.system('clear')
+    clear()
     print("   хмм", end="")
     sys.stdout.flush()
     sleep(1)
@@ -48,8 +48,15 @@ def fast_win():
     print("\n    Тайна замка так и осталась неразгаданной!")
 
 
+def clear():
+    if get_os() == 'mac os' or get_os() == 'linux':
+        os.system('clear')
+    elif get_os() == 'windows':
+        os.system('cls')
+
+
 def inventory():
-    os.system('clear')
+    clear()
     while True:
         if hero.get_inventory():
                 print("0 - Удалить вещь из инвентаря")
@@ -496,7 +503,7 @@ def test_room(hero):
 
 
 def some_words():
-    os.system('clear')
+    clear()
     print("Я ничего не могу вспомнить", end="")
     sys.stdout.flush()
     sleep(sleep_delay/2)
@@ -508,7 +515,7 @@ def some_words():
     print("\n\nКак же меня зовут?")
     name = input(">")
     sleep(sleep_delay/2)
-    os.system('clear')
+    clear()
     print("\nТочно, вспомнил", end=" ")
     sys.stdout.flush()
     print("меня зовут", name)
@@ -516,7 +523,7 @@ def some_words():
     print("\nНажмите (Enter) чтобы осмотреться.")
     input()
     sleep(sleep_delay)
-    os.system('clear')
+    clear()
     print("\nКажется я в какой-то... ", end="")
     sleep(sleep_delay/2)
     print("пещере")
@@ -541,7 +548,7 @@ def room_0():
         key = hero.get_keys()[0]
 
     while True:
-        os.system('clear')
+        clear()
 
         print("""
 1 - Осмотреть все вокруг себя
@@ -618,7 +625,7 @@ def room_0():
 
 def room_1(key):
     next_room = int
-    os.system('clear')
+    clear()
 
     print("Таак, эта комната похоже на какую-то темницу")
     sleep(sleep_delay)
@@ -635,7 +642,7 @@ def room_1(key):
     sleep(sleep_delay*1.5)
 
     while True:
-        os.system('clear')
+        clear()
 
         if key in hero.get_keys():
             print("1 - Попытаться открыть дверь ключом")
@@ -682,7 +689,7 @@ def room_1(key):
             if choose2 is 1:
                 print("Что ж, ладно...")
                 for i in range(3600):
-                    os.system('clear')
+                    clear()
                     print(i, "из и 3600")
                     sleep(1)
 
@@ -722,7 +729,7 @@ def room_2():
     undead_dog = Creatures.LiveCreature("Скелет собаки", 2, d_attack=1)
     room2.add_creature(undead_dog)
 
-    os.system('clear')
+    clear()
     print("Я попал в коридор темницы")
     sleep(sleep_delay/2)
     print("Странно... ", end="")
@@ -740,7 +747,7 @@ def room_2():
         try:
             choose = int(input("1 - Пойти дальше по коридору\n2 - Подойти и поговорить с одним из заключенных\n>"))
         except:
-            os.system('clear')
+            clear()
             continue
 
         sleep(sleep_delay)
@@ -773,7 +780,7 @@ def room_2():
         print('.')
         sleep(sleep_delay/2)
 
-    os.system('clear')
+    clear()
     print("Я слышу какой-то стук по земле", end="")
     sleep(sleep_delay/2)
     print(", он приближается...\n")
@@ -832,7 +839,7 @@ def room_2():
         sys.stdout.flush()
         print("с горящими красными глазами")
         sleep(sleep_delay)
-        os.system('clear')
+        clear()
         print("Черт, она бросилась на меня!")
         sleep(sleep_delay/2)
         hero.health_reduce(undead_dog.get_current_attack())
@@ -840,7 +847,7 @@ def room_2():
         sleep(sleep_delay)
 
         while True:
-            os.system('clear')
+            clear()
             print("В инвентаре сейчас есть:")
             hero.show_inventory()
 
@@ -856,7 +863,7 @@ def room_2():
             else:
                 continue 
 
-            os.system('clear')
+            clear()
 
             if undead_dog.get_current_health() is 0:
                 room2.remove_creature_by_obj(undead_dog)
@@ -891,7 +898,7 @@ def room_2():
         sys.stdout.flush()
         print("с горящими красными глазами")
         sleep(sleep_delay)
-        os.system('clear')
+        clear()
         print("Черт, она бросилась на меня!")
         sleep(sleep_delay/2)
         hero.health_reduce(undead_dog.get_current_attack())
@@ -899,14 +906,14 @@ def room_2():
         sleep(sleep_delay)
 
         while True:
-            os.system('clear')
+            clear()
 
             print("\n(Enter) - Ударить рукой")
             choose2 = input()
 
             undead_dog.health_reduce(hero.attack())
 
-            os.system('clear')
+            clear()
 
             if undead_dog.get_current_health() is 0:
                 room2.remove_creature_by_obj(undead_dog)
@@ -935,7 +942,7 @@ def room_2():
 
 
 def room_3():
-    os.system('clear')
+    clear()
     uplevel()
     sleep(sleep_delay)
     print("")
@@ -945,10 +952,10 @@ def start_window():
     say_hello()
     print("You are using", get_os())
     sleep(sleep_delay)
-    os.system('clear')
+    clear()
     threading.Thread(target=play_music_bg).start()
     sleep(sleep_delay/2)
-    os.system('clear')
+    clear()
     print('   THE WAY OUT', end='')
     sys.stdout.flush()
     sleep(sleep_delay/2)
@@ -975,10 +982,9 @@ def main():
     stop_music()
 
 
-os.system('clear')
+clear()
 # start_window()
-name = some_words()
-# name = "GG"
+##name = some_words()
+name = "GG"
 hero = Creatures.MainHero.create(name)
-hero.info()
-# main()
+main()
