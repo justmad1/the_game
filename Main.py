@@ -33,7 +33,7 @@ except ModuleNotFoundError:
 
 EXIT = False
 
-sleep_delay = 1 # Recommended - 2 seconds
+sleep_delay = 0 # Recommended - 2 seconds
 
 room1 = Locations.Location("Тюрьма", 1, True)
 
@@ -943,13 +943,149 @@ def room_2():
 
 def room_3():
     room3 = Locations.Location("Лаборатория алхимика", 1, True)
-    key = room3.take_a_key()
-
+    chest = Things.Chest(True)
+    room_key = room3.take_a_key()
+    chest_key = chest.take_a_key()
+    dagger = Things.Cutting("Кинжал 3-го уровня", 4, 4, 2, 4, 3) 
+    sword = Things.Cutting("Меч 3-го уровня", 7, 7, 1, 3, 3)
+    r = random.randint(0,1)
+    if r is 1:
+        chest._add_thing(sword)
+    else:
+        chest._add_thing(dagger)
 
     clear()
     uplevel()
+    sleep(sleep_delay*2)
+    clear()
+    print("Это место похоже на обрядную комнату, всюду странные надписи и устройства для пыток")
     sleep(sleep_delay)
-    print("")
+    print("Кажтся, здесь проводятся какие-то варварские обряды с этими заключенными")
+    sleep(sleep_delay)
+    print("С каждой комнатой становится все страшнее...")
+    sleep(sleep_delay)
+    print("В углу комнаты стоит пыльный сундук", end="")
+    sleep(sleep_delay)
+    print(", возможно там будет что-то полезное для меня")
+    sleep(sleep_delay)
+    print("Только где мне взять ключ?")
+    sleep(sleep_delay*2)
+    print("Дорогу мне перебежал черный кот!")
+    sleep(sleep_delay)
+    print("Как я его раньше не заметил?")
+    sleep(sleep_delay)
+    print("Кажется, у него на ошейнике что-то висит!")
+    sleep(sleep_delay*2)
+
+    clear()
+    print("Итак, что мне делать?\n(Введите ваши действия)")
+    string = input(">")
+    string = string.lower()
+    choose = string.split()
+
+    while True:
+        try:
+            if choose[0] == "осмотреться" or choose[0] == "осмотрется":
+                clear()
+                print("В этой комнате есть сундук, куча различных вещей для проведения обрядов и где-то бегает черный кот")
+                del(string)
+                del(choose)
+                string = input(">")
+                string = string.lower()
+                choose = string.split()           
+
+
+            elif choose[0] == "поймать" or choose[0] == "словить" or choose[0] == "словить":
+                if choose[1] == "кота" or choose[1] == "кот" or choose[1] == "кошку":
+                    catch = random.randint(0, 3)
+                    if catch is 3:
+                        clear()
+                        print("Кажется, я его испугал! Кот залез под шкаф, теперь его не достать!")
+                        del(string)
+                        del(choose)
+                        string = input(">")
+                        string = string.lower()
+                        choose = string.split()
+                    else:
+                        clear()
+                        print("Отлично! Я поймал его, ключ у меня!")
+                        hero.add_key(chest_key)
+                        del(string)
+                        del(choose)
+                        string = input(">")
+                        string = string.lower()
+                        choose = string.split()
+
+            elif choose[0] == "искать" or choose[0] == "найти":
+                if choose[1] == "ключ":
+                    clear()
+                    print("Неплохо было бы узнать поконкретнее")
+                    del(string)
+                    del(choose)
+                    string = input(">")
+                    string = string.lower()
+                    choose = string.split()
+
+            elif choose[0] == "посмотреть" or choose[0] == "заглянуть":
+                if choose[2] == "пол" or choose[1] == "пол" or choose[2] == "пол":
+                    sleep(sleep_delay/2)
+                    print("Ого! Под отходящей половицей лежит ключ!")
+                    hero.add_key(room_key)
+                    sleep(sleep_delay)
+                    print("Интересно, от чего он?")
+                    del(string)
+                    del(choose)
+                    string = input(">")
+                    string = string.lower()
+                    choose = string.split()
+
+            elif choose[0] == "открыть":
+                if choose[1] == "сундук":
+                    if chest_key in hero.get_keys():
+                        clear()
+                        print("Сундук открыт!")
+                        del(string)
+                        del(choose)
+                        string = input(">")
+                        string = string.lower()
+                        choose = string.split()
+                    else:
+                        clear()
+                        print("Ключ не подходит!")
+                        del(string)
+                        del(choose)
+                        string = input(">")
+                        string = string.lower()
+                        choose = string.split()
+                if choose[1] == "дверь":
+                    if room_key in hero.get_keys():
+                        clear()
+                        print("Дверь отворилась")
+                        for i in range(5):
+                            print(".")
+                            sleep(1)
+                        print("Выход")
+                        return
+
+                        room_4()
+                    else:
+                        clear()
+                        print("Ключ не подходит!")
+                        del(string)
+                        del(choose)
+                        string = input(">")
+                        string = string.lower()
+                        choose = string.split()
+            clear()
+            print("Неизвестное действие!")
+            del(string)
+            del(choose)
+            string = input(">")
+            string = string.lower()
+            choose = string.split()
+
+        except:
+            pass
 
 
 def start_window():
@@ -980,13 +1116,13 @@ def uplevel():
 
 
 def main():
-    room_0()
+    room_3()
     stop_music()
 
 
 clear()
-start_window()
-name = some_words()
+# start_window()
+# name = some_words()
 name = "GG"
 hero = Creatures.MainHero.create(name)
 main()
