@@ -970,7 +970,7 @@ def uplevel():
 
 def main():
     room_0()
-    room_3()
+    # room_3()
 
     stop_music()
 
