@@ -33,7 +33,7 @@ except ModuleNotFoundError:
 
 EXIT = False
 
-sleep_delay = 0 # Recommended - 2 seconds
+sleep_delay = 1 # Recommended - 2 seconds
 
 room1 = Locations.Location("Тюрьма", 1, True)
 
@@ -942,6 +942,10 @@ def room_2():
 
 
 def room_3():
+    room3 = Locations.Location("Лаборатория алхимика", 1, True)
+    key = room3.take_a_key()
+
+
     clear()
     uplevel()
     sleep(sleep_delay)
@@ -953,7 +957,7 @@ def start_window():
     print("You are using", get_os())
     sleep(sleep_delay)
     clear()
-    threading.Thread(target=play_music_bg).start()
+    # threading.Thread(target=play_music_bg).start()
     sleep(sleep_delay/2)
     clear()
     print('   THE WAY OUT', end='')
@@ -963,7 +967,7 @@ def start_window():
         print('.', end='')
         sys.stdout.flush()
         sleep(sleep_delay/2)
-    print()
+    print(" (beta)")
     print("Нажмите (Enter) для начала.")
     input()
 
@@ -977,14 +981,12 @@ def uplevel():
 
 def main():
     room_0()
-    # room_3()
-
     stop_music()
 
 
 clear()
-# start_window()
-##name = some_words()
+start_window()
+name = some_words()
 name = "GG"
 hero = Creatures.MainHero.create(name)
 main()
