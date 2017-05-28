@@ -754,7 +754,7 @@ def room_2():
         if choose is 1:
             break
         elif choose is 2:
-            print("-Приветствю, кто ты друг мой?")
+            print("-Приветствую, кто ты друг мой?")
             sleep(sleep_delay)
             print("-(Заключенный)Грядущее не ведает отсрочки.")
             sleep(sleep_delay)
