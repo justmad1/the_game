@@ -33,7 +33,7 @@ except ModuleNotFoundError:
 
 EXIT = False
 
-sleep_delay = 0 # Recommended - 2 seconds
+sleep_delay = 2 # Recommended - 2 seconds
 
 room1 = Locations.Location("Тюрьма", 1, True)
 
@@ -948,11 +948,20 @@ def room_3():
     chest_key = chest.take_a_key()
     dagger = Things.Cutting("Кинжал 3-го уровня", 4, 4, 2, 4, 3) 
     sword = Things.Cutting("Меч 3-го уровня", 7, 7, 1, 3, 3)
+    armor = Things.Armor("Броня 2 уровня", 1, 4, 10)
+    helmet = Things.Armor("Шлем 2 уровня", 2, 1, 3)
+    shield = Things.Armor("Щит 2 уровня", 3, 3, 5)
+    chest._add_thing(armor)
+    chest._add_thing(shield)
+    chest._add_thing(helmet)
+
     r = random.randint(0,1)
     if r is 1:
         chest._add_thing(sword)
+        del(dagger)
     else:
         chest._add_thing(dagger)
+        del(sword)
 
     clear()
     uplevel()
@@ -1043,7 +1052,36 @@ def room_3():
                 if choose[1] == "сундук":
                     if chest_key in hero.get_keys():
                         clear()
+                        if not chest.is_locked():
+                            print("Сундук пуст!")
+
+                            del(string)
+                            del(choose)
+                            string = input(">")
+                            string = string.lower()
+                            choose = string.split()
+                            continue
+
                         print("Сундук открыт!")
+                        chest.open(chest_key)
+                        sleep(sleep_delay)
+                        print("В сундуке я нашел:\n")
+                        chest.show_things()
+                        sleep(sleep_delay)
+                        input("(Enter) - забрать все вещи")
+
+                        things_from_chest = chest.take_all_things()
+
+                        for obj in things_from_chest:
+                            try:
+                                hero.add_to_inventory(obj)
+                            except:
+                                pass
+
+                        clear()
+                        print("Все вещи из сундука добавлены в инвентарь!\nЧто делать дальше?")
+
+                        del(things_from_chest)
                         del(string)
                         del(choose)
                         string = input(">")
@@ -1065,7 +1103,6 @@ def room_3():
                             print(".")
                             sleep(1)
                         print("Выход")
-                        return
 
                         room_4()
                     else:
@@ -1088,12 +1125,19 @@ def room_3():
             pass
 
 
+def room_4():
+    clear()
+    print("Комната 4")
+    sleep(3)
+    return
+
+
 def start_window():
     say_hello()
     print("You are using", get_os())
     sleep(sleep_delay)
     clear()
-    # threading.Thread(target=play_music_bg).start()
+    threading.Thread(target=play_music_bg).start()
     sleep(sleep_delay/2)
     clear()
     print('   THE WAY OUT', end='')
@@ -1116,13 +1160,13 @@ def uplevel():
 
 
 def main():
-    room_3()
+    room_0()
     stop_music()
 
 
 clear()
-# start_window()
-# name = some_words()
-name = "GG"
+start_window()
+name = some_words()
+# name = "GG"
 hero = Creatures.MainHero.create(name)
 main()

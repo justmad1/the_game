@@ -287,9 +287,9 @@ class Chest(object):
             else:
                 for obj in self.__all_things:
                     try:
-                        print(obj.info())
+                        obj.info()
                     except:
-                        print(obj)
+                        pass
                     print("-----------")
         else:
             print("Сундук закрыт")
@@ -331,6 +331,18 @@ class Chest(object):
                     return r
             except:
                 pass
+
+    def take_all_things(self):
+        all_things = []
+
+        for obj in self.__all_things:
+            try:
+                all_things.append(obj)
+            except:
+                pass
+
+        return all_things
+
 
 
 class RandomCutting(Cutting):
