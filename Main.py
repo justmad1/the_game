@@ -30,7 +30,6 @@ try:
     from tkinter import *
 except ModuleNotFoundError:
     print("pygame module not found!")
-
 EXIT = False
 
 sleep_delay = 2 # Recommended - 2 seconds
