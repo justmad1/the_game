@@ -33,7 +33,6 @@ except ModuleNotFoundError:
 EXIT = False
 
 sleep_delay = 2 # Recommended - 2 seconds
-
 room1 = Locations.Location("Тюрьма", 1, True)
 
 
